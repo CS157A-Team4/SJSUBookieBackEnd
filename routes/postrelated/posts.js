@@ -11,7 +11,7 @@ router.get('/:id', async (req, res) =>{
   let saveString = `SELECT userID FROM SavedPost;`
   connection.query(queryString+commentString+saveString,
     function(error, results, fields) {
-      if (error || results.length === 0){
+      if (error || results[0].length === 0){
           console.log(error);
           res.json({error:"Results not found. Post may have been deleted."})
       }
