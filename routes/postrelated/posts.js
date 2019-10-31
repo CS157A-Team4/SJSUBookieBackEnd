@@ -71,7 +71,7 @@ router.post('/create', async function(req, res) {
     poster = req.body.poster;
     today = req.body.date;
     imageString = `INSERT INTO PostImage (\`postId\`, \`Image\`) VALUES(0,"${image}");`;
-    imageIdGetString = `SELECT LAST_INSERT_ID();`;
+    getPostIdString = `SELECT LAST_INSERT_ID();`;
     connection.query(
         imageString,
         function(error, results, fields) {
@@ -83,7 +83,7 @@ router.post('/create', async function(req, res) {
           queryString = `INSERT INTO Post (\`title\`,\`author\`,\`course\`,\`condition\`,\`body\`,\`imageId\`,\`price\`, \`seller\`,\`date\`) \
     values("${bookname}","${author}", "${course}","${condition}","${description}","${imageId}",${price},"${poster}","${today}");`;
           connection.query(
-            queryString,
+            queryString,getPostIdString,
             function(error, results, fields) {
               if (error){
                   console.log(error);
