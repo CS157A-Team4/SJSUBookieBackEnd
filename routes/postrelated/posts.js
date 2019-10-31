@@ -13,6 +13,7 @@ router.get('/:id', async (req, res) =>{
     function(error, results, fields) {
       if (error){
           console.log(error);
+          res.json({error:"Results not found. Post may have been deleted."})
       }
       else{
         console.log(results[0]);
