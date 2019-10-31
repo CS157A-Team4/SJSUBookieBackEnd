@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testAPI = require('./routes/testAPI');
 var profile = require('./routes/profile/posts');
+var friends = require('./routes/profile/friends');
 var posts = require('./routes/postrelated/posts');
 const bodyParser = require("body-parser");
 
@@ -32,7 +33,7 @@ app.use('/users', usersRouter);
 app.use('/testAPI', testAPI);
 app.use('/posts', posts);
 app.use('/profile', profile);
-
+app.use('/friends', friends);
 app.use(bodyParser.json({
   extended: true
 }));
