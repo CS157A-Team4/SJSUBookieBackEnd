@@ -137,6 +137,7 @@ router.post('/create', async function(req, res) {
       postId = req.body.postId;
       imageId = req.body.imageId;
       let deleteStatement = `DELETE Post, comments, SavedPost, PostImage FROM Post INNER JOIN comments ON (comments.postid = Post.postID) INNER JOIN SavedPost ON (SavedPost.postid = Post.postID) INNER JOIN PostImage ON (PostImage.imageID = ${imageId}) WHERE Post.postID=${postId};`
+      console.log(deleteStatement);
       connection.query(deleteStatement,
         function(error,results,fields){
           if(error){
