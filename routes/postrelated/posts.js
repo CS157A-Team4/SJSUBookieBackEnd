@@ -147,6 +147,7 @@ router.post('/create', async function(req, res) {
             }); 
           }
           else{
+            console.log(results);
               return res.status(200).json({
                 error:false,
                 message:"Deleted the post, comments, and any saved post regarding this post."
