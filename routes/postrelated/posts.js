@@ -13,6 +13,7 @@ router.get('/:id', async (req, res) =>{
     function(error, results, fields) {
       if (error || results[0].length === 0){
           console.log(error);
+          res.json({error:"Results not found. Post may have been deleted."})
       }
       else{
         console.log(results[0]);
@@ -136,8 +137,8 @@ router.post('/create', async function(req, res) {
       postId = req.body.postId;
       imageId = req.body.imageId;
       let postDelete = `DELETE FROM Post WHERE postID=${postId};`;
-      let commentDelete = `DELETE FROM comments WHERE postid=${postid};`;
-      let saveDelete =`DELETE FROM SavedPosts WHERE postid=${postid};`;
+      let commentDelete = `DELETE FROM comments WHERE postid=${postId};`;
+      let saveDelete =`DELETE FROM SavedPosts WHERE postid=${postId};`;
       let imageDelete =`DELETE FROM PostImage WHERE imageID=${imageId};`;
       connection.query(postDelete,commentDelete,saveDelete,imageDelete,
         function(error,results,fields){
