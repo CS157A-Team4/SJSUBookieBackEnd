@@ -13,7 +13,6 @@ router.get('/:id', async (req, res) =>{
     function(error, results, fields) {
       if (error || results[0].length === 0){
           console.log(error);
-          res.json({error:"Results not found. Post may have been deleted."})
       }
       else{
         console.log(results[0]);
@@ -72,7 +71,6 @@ router.post('/create', async function(req, res) {
     poster = req.body.poster;
     today = req.body.date;
     imageString = `INSERT INTO PostImage (\`postId\`, \`Image\`) VALUES(0,"${image}");`;
-    getPostIdString = `SELECT LAST_INSERT_ID();`;
     connection.query(
         imageString,
         function(error, results, fields) {
@@ -84,7 +82,7 @@ router.post('/create', async function(req, res) {
           queryString = `INSERT INTO Post (\`title\`,\`author\`,\`course\`,\`condition\`,\`body\`,\`imageId\`,\`price\`, \`seller\`,\`date\`) \
     values("${bookname}","${author}", "${course}","${condition}","${description}","${imageId}",${price},"${poster}","${today}");`;
           connection.query(
-            queryString,getPostIdString,
+            queryString,
             function(error, results, fields) {
               if (error){
                   console.log(error);
@@ -134,4 +132,28 @@ router.post('/create', async function(req, res) {
         }
       );
     });
+    router.delete('/delete', async function(req, res) {
+      postId = req.body.postId;
+      imageId = req.body.imageId;
+      let postDelete = `DELETE FROM Post WHERE postID=${postId};`;
+      let commentDelete = `DELETE FROM comments WHERE postid=${postid};`;
+      let saveDelete =`DELETE FROM SavedPosts WHERE postid=${postid};`;
+      let imageDelete =`DELETE FROM PostImage WHERE imageID=${imageId};`;
+      connection.query(postDelete,commentDelete,saveDelete,imageDelete,
+        function(error,results,fields){
+          if(error){
+            console.log("ERROR");
+            return res.status(400).json({
+              error: true,
+              message: "Error deleting the post"
+            }); 
+          }
+          else{
+              return res.status(200).json({
+                error:false,
+                message:"Deleted the post, comments, and any saved post regarding this post."
+              });
+          }
+        });
+  });
 module.exports = router;
