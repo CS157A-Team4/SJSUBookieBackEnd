@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
 // res: send the response
 router.get('/list/:id', async (req, res) =>{
     let id =  req.params.id;
+    console.log(id);
 //    let queryString = `select f1.* from FriendsListAndRequest f1 inner join FriendsListAndRequest f2 on f1.user1 = f2.user2 and f1.user1 = f2.user2;`
     let queryString = `select f1.*, tb.firstname, tb.surname from FriendsListAndRequest f1 inner join 
 FriendsListAndRequest f2 on f1.user1 = f2.user2 and f1.user2 = f2.user1 and f1.user1=${id}
