@@ -140,7 +140,7 @@ router.post('/create', async function(req, res) {
       connection.query(deleteStatement,
         function(error,results,fields){
           if(error){
-            console.log("ERROR");
+            console.log("ERROR", error);
             return res.status(400).json({
               error: true,
               message: "Error deleting the post"
