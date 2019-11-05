@@ -9,7 +9,7 @@ router.get('/list/:id', async (req, res) =>{
     let id =  req.params.id;
 //    let queryString = `select f1.* from FriendsListAndRequest f1 inner join FriendsListAndRequest f2 on f1.user1 = f2.user2 and f1.user1 = f2.user2;`
     let queryString = `select f1.*, tb.firstname, tb.surname from FriendsListAndRequest f1 inner join 
-FriendsListAndRequest f2 on f1.user1 = f2.user2 and f1.user2 = f2.user1 and f1.user1=23 
+FriendsListAndRequest f2 on f1.user1 = f2.user2 and f1.user2 = f2.user1 and f1.user1=${id} 
 JOIN user tb ON f1.user2 = tb.iduser`;
     connection.query(queryString,
         function(error, results, fields) {
@@ -28,7 +28,7 @@ router.get('/request/:id', async (req, res) =>{
     let id =  req.params.id;
     let queryString = `SELECT f1.* from FriendsListAndRequest f1 WHERE f1.user1 != 23 and f1.user1 
 NOT IN(select f1.user2 from FriendsListAndRequest f1 INNER JOIN FriendsListAndRequest f2 on f1.user1 = f2.user2 and 
-f1.user2 = f2.user1 and f1.user1=23);`;
+f1.user2 = f2.user1 and f1.user1=${id});`;
     connection.query(queryString,
         function(error, results, fields) {
             if (error){
