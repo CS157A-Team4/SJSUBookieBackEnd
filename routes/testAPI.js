@@ -32,7 +32,9 @@ router.get('/tables',function(req, res, next) {
     }
     console.log(conditions);
   connection.query(
-    `SELECT tb1.*, tb2.firstname, tb2.surname,tb3.image FROM Post tb1 JOIN user tb2 on tb1.seller = tb2.iduser JOIN PostImage tb3 on tb3.imageID = tb1.imageId ${conditions};`,
+    `SELECT tb1.*, tb2.firstname, tb2.surname,tb3.image 
+          FROM Post tb1 JOIN user tb2 ON tb1.seller = tb2.iduser 
+          JOIN PostImage tb3 ON tb3.imageID = tb1.imageId ${conditions};`,
     function(error, results, fields) {
       if (error) throw error;
       res.json(results);
