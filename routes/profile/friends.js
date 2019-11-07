@@ -15,9 +15,11 @@ router.get('/list/:id', async (req, res) =>{
     let id =  req.params.id;
     console.log(id);
 //    let queryString = `select f1.* from FriendsListAndRequest f1 inner join FriendsListAndRequest f2 on f1.user1 = f2.user2 and f1.user1 = f2.user2;`
-    let queryString = `select f1.*, tb.firstname, tb.surname from FriendsListAndRequest f1 inner join 
-FriendsListAndRequest f2 on f1.user1 = f2.user2 and f1.user2 = f2.user1 and f1.user1=${id}
-JOIN user tb ON f1.user2 = tb.iduser`;
+    let queryString = `SELECT f1.*, tb.firstname, tb.surname 
+                       FROM FriendsListAndRequest f1 
+                       INNER JOIN FriendsListAndRequest f2 ON f1.user1 = f2.user2 
+                                  AND f1.user2 = f2.user1 AND f1.user1=${id}
+                       JOIN user tb ON f1.user2 = tb.iduser`;
     connection.query(queryString,
         function(error, results, fields) {
           if (error){
@@ -36,9 +38,10 @@ JOIN user tb ON f1.user2 = tb.iduser`;
 // handle the request friends request
 router.get('/request/:id', async (req, res) =>{
     let id =  req.params.id;
-    let queryString = `SELECT f1.* from FriendsListAndRequest f1 WHERE f1.user1 != 23 and f1.user1 
-NOT IN(select f1.user2 from FriendsListAndRequest f1 INNER JOIN FriendsListAndRequest f2 on f1.user1 = f2.user2 and 
-f1.user2 = f2.user1 and f1.user1=${id});`;
+    let queryString = `SELECT f1.* 
+                       FROM FriendsListAndRequest f1 WHERE f1.user1 != 23 AND f1.user1 
+                       NOT IN(SELECT f1.user2 FROM FriendsListAndRequest f1 INNER JOIN FriendsListAndRequest f2 
+                       ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user1=${id});`;
     connection.query(queryString,
         function(error, results, fields) {
             if (error){
