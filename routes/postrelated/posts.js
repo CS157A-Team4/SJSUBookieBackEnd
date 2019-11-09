@@ -163,7 +163,7 @@ router.post('/create', async function(req, res) {
         const title = req.body.title
         const body = req.body.body
         
-        const INSERT_MESSAGE_QUERY = `INSERT INTO test (\`title\`, \`body\`) VALUES ( '${title}', '${body}');`
+        const INSERT_MESSAGE_QUERY = `INSERT INTO tester (\`title\`, \`body\`) VALUES ( '${title}', '${body}');`
         connection.query(INSERT_MESSAGE_QUERY, (err, results) => {
             if(err){
                 console.log(err);
