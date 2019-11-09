@@ -156,4 +156,21 @@ router.post('/create', async function(req, res) {
           }
         });
   });
+  app.post('/messages/addmessage/', (req, res) => {
+    
+        console.log(req.body)
+        
+        const title = req.body.title
+        const body = req.body.body
+        
+        const INSERT_MESSAGE_QUERY = `INSERT INTO test ( title, body) VALUES ( '${title}', '${body}');`
+        connection.query(INSERT_MESSAGE_QUERY, (err, results) => {
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.send('successfully added post')
+            }
+        })
+    })
 module.exports = router;
