@@ -156,7 +156,7 @@ router.post('/create', async function(req, res) {
           }
         });
   });
-  app.post('/messages/addmessage/', (req, res) => {
+  router.post('/messages/addmessage/', (req, res) => {
     
         console.log(req.body)
         
