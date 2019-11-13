@@ -55,30 +55,30 @@ ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user1=${id}) JOIN user tb 
         }
     );
 });
-router.post('/request/create', async(req, res) =>{
-    let id =  req.body.user1;
-    let id2 = req.body.user2;
-    let queryString = `INSERT INTO FriendsListAndRequest(user1, user2) VALUES(${id}, ${id2})`;
-    connection.query(queryString,
-        function(error, results, fields) {
-            if (error){
-                console.log("ERROR", error);
-                return res.status(400).json({
-                    error: true,
-                    message: "cannot send friend request"
-                });
-            }
-            else{
-                res.json(results);
-                return res.status(200).json({
-                    error: false,
-                    message: "message sends to the user"
-                });
-            };
-
-        }
-    );
-});
+// router.post('/request/create', async(req, res) =>{
+//     let id =  req.body.user1;
+//     let id2 = req.body.user2;
+//     let queryString = `INSERT INTO FriendsListAndRequest(user1, user2) VALUES(${id}, ${id2})`;
+//     connection.query(queryString,
+//         function(error, results, fields) {
+//             if (error){
+//                 console.log("ERROR", error);
+//                 return res.status(400).json({
+//                     error: true,
+//                     message: "cannot send friend request"
+//                 });
+//             }
+//             else{
+//                 res.json(results);
+//                 return res.status(200).json({
+//                     error: false,
+//                     message: "message sends to the user"
+//                 });
+//             };
+//
+//         }
+//     );
+// });
 // router.delete('/delete/:id', async(req, res) =>{
 //     let id = req.params.id;
 //     let queryString = `DELETE FROM FriendsListAndRequest
