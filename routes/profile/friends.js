@@ -79,7 +79,7 @@ router.post('/request/create', async(req, res) =>{
         }
     );
 });
-router.delete('/delete/:id', async(req, res) {
+router.delete('/delete/:id', async(req, res) =>{
     let id = req.params.id;
     let queryString = `DELETE FROM FriendsListAndRequest
                        WHERE relationshipId= ${id} ;`
