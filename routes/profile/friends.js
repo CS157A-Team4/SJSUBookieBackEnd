@@ -34,7 +34,7 @@ router.get('/list/:id', async(req, res) =>{
 // handle the request; friends request
 router.get('/request/:id', async(req, res) =>{
     let id =  req.params.id;
-    let queryString = `SELECT DISTINCT f1.user1,f1.user2, tb.firstname, tb.surname FROM cs157a.FriendsListAndRequest f1 WHERE f1.user2 = ${id} AND f1.user1 NOT IN(SELECT f1.user2 FROM FriendsListAndRequest f1 INNER JOIN FriendsListAndRequest f2 ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user1=${id}) JOIN user tb ON f1.user1 = tb.iduser;`;
+    let queryString = `SELECT DISTINCT f1.user1, f1.user2, tb.firstname, tb.surname FROM cs157a.FriendsListAndRequest f1 JOIN user tb ON f1.user1 = tb.iduser WHERE f1.user2 = ${id} AND f1.user1 NOT IN( SELECT f1.user2 FROM FriendsListAndRequest f1 INNER JOIN FriendsListAndRequest f2 ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user1 = ${id});`;
     connection.query(queryString,
         function(error, results, fields) {
             if (error){
