@@ -28,7 +28,7 @@ ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user1=${id})`;
           else{
               // send a json response with json support
               res.json(results)
-              res.render('The friends list: ');
+             // res.render('The friends list: ');
               console.log(results[0]);
           };
         }
@@ -48,7 +48,7 @@ ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user1=${id}) JOIN user tb 
             }
             else{
                 res.json(results)
-                res.render('The friends request list');
+                //res.render('The friends request list');
                 console.log(results[0]);
             };
 
