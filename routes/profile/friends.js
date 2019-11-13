@@ -63,7 +63,6 @@ router.post('/request/create', async(req, res) =>{
                 });
             }
             else{
-                res.json(results);
                 return res.status(200).json({
                     error: false,
                     message: "message sends to the user"
