@@ -79,28 +79,28 @@ router.post('/request/create', async(req, res) =>{
         }
     );
 });
-router.delete('/delete/:id', async(req, res) =>{
-    let id = req.params.id;
-    let queryString = `DELETE FROM FriendsListAndRequest
-                       WHERE relationshipId= ${id} ;`
-    console.log(queryString);
-    connection.query(queryString,
-        function(error,results,fields){
-            if(error){
-                console.log("ERROR", error);
-                return res.status(400).json({
-                    error: true,
-                    message: "cannot delete the friend request"
-                });
-            }
-            else{
-                console.log(results);
-                return res.status(200).json({
-                    error:false,
-                    message:"Deleted the friend request."
-                });
-            }
-        });
- });
+// router.delete('/delete/:id', async(req, res) =>{
+//     let id = req.params.id;
+//     let queryString = `DELETE FROM FriendsListAndRequest
+//                        WHERE relationshipId= ${id} ;`
+//     console.log(queryString);
+//     connection.query(queryString,
+//         function(error,results,fields){
+//             if(error){
+//                 console.log("ERROR", error);
+//                 return res.status(400).json({
+//                     error: true,
+//                     message: "cannot delete the friend request"
+//                 });
+//             }
+//             else{
+//                 console.log(results);
+//                 return res.status(200).json({
+//                     error:false,
+//                     message:"Deleted the friend request."
+//                 });
+//             }
+//         });
+//  });
 
 module.exports = router;
