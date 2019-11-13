@@ -75,8 +75,7 @@ router.post('/request/create', async(req, res) =>{
 router.post('/delete', async(req, res) =>{
     let id = req.body.id;
     console.log(id);
-    let queryString = `DELETE FROM FriendsListAndRequest
-                       WHERE relationshipId= ${id} ;`
+    let queryString = `DELETE FROM FriendsListAndRequest WHERE relationshipId= ${id} ;`
     console.log(queryString);
     connection.query(queryString,
         function(error,results,fields){
