@@ -38,7 +38,7 @@ router.get('/list/:id', async(req, res) =>{
 // handle the request; friends request
 router.get('/request/:id', async(req, res) =>{
     let id =  req.params.id;
-    let queryString = `SELECT f1.* FROM cs157a.FriendsListAndRequest f1 WHERE f1.user2 = {$id} AND f1.user1 
+    let queryString = `SELECT f1.* FROM cs157a.FriendsListAndRequest f1 WHERE f1.user2 = ${id} AND f1.user1 
 NOT IN(SELECT f1.user2 FROM FriendsListAndRequest f1 INNER JOIN FriendsListAndRequest f2 
 ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user2=${id});`;
     connection.query(queryString,
@@ -55,26 +55,26 @@ ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user2=${id});`;
         }
     );
 });
-router.delete('/delete', async(req, res) {
-    id = req.params.id;
-    let queryString = `DELETE user1, user2 
-                       FROM FriendsListAndRequest f1 
-                       WHERE f1.user1 = f2.user2 
-                       AND f1.user2 = f2.user1 AND f1.user1=${id}`;
-    console.log(queryString);
-    connection.query(queryString,
-        function(error,results,fields){
-            if(error){
-                console.log("ERROR", error);
-            }
-            else{
-                console.log(results);
-                return res.status(200).json({
-                    error:false,
-                    message:"Deleted the post, comments, and any saved post regarding this post."
-                });
-            }
-        });
-});
+// router.delete('/delete', async(req, res) {
+//     id = req.params.id;
+//     let queryString = `DELETE user1, user2
+//                        FROM FriendsListAndRequest f1
+//                        WHERE f1.user1 = f2.user2
+//                        AND f1.user2 = f2.user1 AND f1.user1=${id}`;
+//     console.log(queryString);
+//     connection.query(queryString,
+//         function(error,results,fields){
+//             if(error){
+//                 console.log("ERROR", error);
+//             }
+//             else{
+//                 console.log(results);
+//                 return res.status(200).json({
+//                     error:false,
+//                     message:"Deleted the post, comments, and any saved post regarding this post."
+//                 });
+//             }
+//         });
+//  });
 
 module.exports = router;
