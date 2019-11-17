@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../database');
 
-router.get('login', async function(req, res) {
+router.get('/', async function(req, res) {
     email = req.body.email;
     password = req.body.password;
     queryString = `SELECT * FROM user WHERE email="${email}" and password="${password}";`;

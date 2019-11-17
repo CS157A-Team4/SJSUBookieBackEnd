@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var connection = require('../database');
+
 router.get('/', function(req, res, next) {
     res.send('Post api is working properly');
 });
+
 router.get('/:id', async (req, res) =>{
   let id =  req.params.id;
   let queryString = `SELECT tb1.*, tb2.firstname, tb2.surname,tb3.image FROM Post tb1 JOIN user tb2 on tb1.seller = tb2.iduser JOIN PostImage tb3 ON tb3.imageID = tb1.imageId WHERE tb1.postID=${id};`;
