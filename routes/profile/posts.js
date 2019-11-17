@@ -11,7 +11,7 @@ router.post('/save', async function(req, res) {
     postId = req.body.postId;
     imageId = req.body.imageId;
     //checkString = `SELECT * FROM SavedPost WHERE \`userId\`="${userId}" AND \`ID_POST\="${postId};`
-    queryString = `INSERT INTO SavedPost(\`userID\`, \`postType\`, \`ID_Post\`,\`imageID\`) \
+    queryString = `INSERT INTO SavedPost(\`userID\`, \`postType\`, \`postid\`,\`imageID\`) \
     VALUES(${userId},"favorite", ${postId},"${imageId}");`;
     console.log(queryString);
     connection.query(
@@ -36,7 +36,7 @@ router.post('/save', async function(req, res) {
     router.post('/unsave', async function(req, res) {
         userId = req.body.userId
         postId = req.body.postId;
-        queryString = `DELETE FROM SavedPost WHERE \`userID\`="${userId}" AND \`postType\` ="favorite" AND \`ID_Post\`="${postId}";`;
+        queryString = `DELETE FROM SavedPost WHERE \`userID\`="${userId}" AND \`postType\` ="favorite" AND \`postid\`="${postId}";`;
         console.log(queryString);
         connection.query(
             queryString,

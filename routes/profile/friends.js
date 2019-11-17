@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 // handle the list friends request
 // req: get the request
 // res: send the response
-router.get('/list/:id', async (req, res) =>{
+router.get('/list/:id', async(req, res) =>{
     let id =  req.params.id;
     console.log(id);
 //    let queryString = `select f1.* from FriendsListAndRequest f1 inner join FriendsListAndRequest f2 on f1.user1 = f2.user2 and f1.user1 = f2.user2;`
@@ -23,7 +23,7 @@ router.get('/list/:id', async (req, res) =>{
     connection.query(queryString,
         function(error, results, fields) {
           if (error){
-              console.log(error);
+              console.log("ERROR", error);
           }
           else{
               // send a json response with json support
@@ -35,17 +35,16 @@ router.get('/list/:id', async (req, res) =>{
       );
 });
 
-// handle the request friends request
-router.get('/request/:id', async (req, res) =>{
+// handle the request; friends request
+router.get('/request/:id', async(req, res) =>{
     let id =  req.params.id;
-    let queryString = `SELECT f1.* 
-                       FROM FriendsListAndRequest f1 WHERE f1.user1 != 23 AND f1.user1 
-                       NOT IN(SELECT f1.user2 FROM FriendsListAndRequest f1 INNER JOIN FriendsListAndRequest f2 
-                       ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user1=${id});`;
+    let queryString = `SELECT DISTINCT f1.user1,f1.user2 FROM cs157a.FriendsListAndRequest f1 WHERE f1.user2 = ${id} AND f1.user1
+NOT IN(SELECT f1.user2 FROM FriendsListAndRequest f1 INNER JOIN FriendsListAndRequest f2 
+ON f1.user1 = f2.user2 AND f1.user2 = f2.user1 AND f1.user1=${id});`;
     connection.query(queryString,
         function(error, results, fields) {
             if (error){
-                console.log(error);
+                console.log("ERROR", error);
             }
             else{
                 res.json(results)
@@ -56,5 +55,26 @@ router.get('/request/:id', async (req, res) =>{
         }
     );
 });
+// router.delete('/delete', async(req, res) {
+//     id = req.params.id;
+//     let queryString = `DELETE user1, user2
+//                        FROM FriendsListAndRequest f1
+//                        WHERE f1.user1 = f2.user2
+//                        AND f1.user2 = f2.user1 AND f1.user1=${id}`;
+//     console.log(queryString);
+//     connection.query(queryString,
+//         function(error,results,fields){
+//             if(error){
+//                 console.log("ERROR", error);
+//             }
+//             else{
+//                 console.log(results);
+//                 return res.status(200).json({
+//                     error:false,
+//                     message:"Deleted the post, comments, and any saved post regarding this post."
+//                 });
+//             }
+//         });
+//  });
 
 module.exports = router;
