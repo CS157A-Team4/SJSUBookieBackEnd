@@ -2,13 +2,6 @@ var express = require('express');
 var router = express.Router();
 var connection = require('./database');
 router.get('/', function(req, res, next) {
-    connection.query(
-      "SELECT * FROM cs1571.user;", 
-      function(error, results, fields) {
-        if (error) throw error;
-        res.json(results);
-      }
-    );
     res.send('API is working properly');
 });
 
