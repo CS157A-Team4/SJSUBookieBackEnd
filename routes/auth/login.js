@@ -12,7 +12,6 @@ router.get('/', async function(req, res) {
         function(error, results, fields) {
             if(error){
                 console.log(error);
-                throw error
                 return res.status(400).json({
                     error: true,
                     message: "Error getting user"
@@ -22,6 +21,26 @@ router.get('/', async function(req, res) {
                     error: false,
                     message: `User Found:\n email:  ${email}\n pasword: ${password}`
                 }); 
+            }
+        }
+    )
+})
+
+router.get('/test', async function(req, res) {
+    connection.query(
+        "SELECT * FROM user;",
+        function(error, results, fields){
+            if(error){
+                console.log(error);
+                return res.status(400).json({
+                    error: true,
+                    message: "Error getting user"
+                });
+            }else{
+                return res.status(200).json({
+                    error: false,
+                    message: 'success!'
+                })
             }
         }
     )
