@@ -5,7 +5,7 @@ var connection = require('../database');
 router.get('/', async function(req, res) {
     email = req.body.email;
     password = req.body.password;
-    queryString = `SELECT * FROM user WHERE email='${email}' and password='${password}';`;
+    queryString = `SELECT * FROM user WHERE email='CB@sjsu.edu' and password='ahhhh';`;
     console.log(queryString);
     connection.query(
         queryString,
