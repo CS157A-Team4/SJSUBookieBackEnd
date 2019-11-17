@@ -3,8 +3,10 @@ var router = express.Router();
 var connection = require('../database');
 
 router.get('/', async function(req, res) {
-    email = req.body.email;
-    password = req.body.password;
+    //email = req.body.email;
+    //password = req.body.password;
+    console.log(email = req.body.email);
+    console.log(req.body.password);
     queryString = `SELECT * FROM user WHERE email='CB@sjsu.edu' and password='ahhhh';`;
     console.log(queryString);
     connection.query(
