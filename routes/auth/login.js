@@ -12,6 +12,7 @@ router.get('/', async function(req, res) {
         function(error, results, fields) {
             if(error){
                 console.log(error);
+                throw error
                 return res.status(400).json({
                     error: true,
                     message: "Error getting user"
