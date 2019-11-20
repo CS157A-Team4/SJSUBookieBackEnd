@@ -24,7 +24,7 @@ router.get('/tables',function(req, res, next) {
           res.json({error:true, message:error});
         }
         else{
-        res.json({error:true, message:results});
+        res.json({error:false, message:results});
         }
       }
     );
