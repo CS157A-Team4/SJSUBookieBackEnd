@@ -15,6 +15,20 @@ router.get('/tables',function(req, res, next) {
       }
     );
   });
+  router.get('/courses',function(req,res){
+    let courseString = "SELECT * FROM Courses;";
+    connection.query(
+      courseString,
+      function(error, results, fields) {
+        if (error) {
+          res.json({error:true, message:error});
+        }
+        else{
+        res.json({error:true, message:results});
+        }
+      }
+    );
+  })
   router.get('/search', function(req, res){
     console.log("hi");
     let course =  req.query.course;
