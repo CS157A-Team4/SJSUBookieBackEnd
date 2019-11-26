@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
+
 var connection = require('../database');
 
 
@@ -10,8 +10,8 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/submit', function(req,res,next){
-      let email =  req.params.email;
-      let password =  req.params.password;
+      let email =  req.body.email;
+      let password =  req.body.password;
     
     /*
     1. Take a username and 'password'
