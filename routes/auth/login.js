@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req,res,next){
       let id =  req.params.id;
-      queryString = `SELECT * FROM user WEHRE iduser=${id};`;
+      queryString = `SELECT * FROM user WHERE iduser=${id};`;
       connection.query(
         queryString,
         function(error, results, fields) {
