@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
 var connection = require('../database');
 
 
@@ -7,9 +8,18 @@ router.get('/', function(req, res, next) {
     res.send('Post api is working properly');
 });
 
-router.get('/:id', function(req,res,next){
-      let id =  req.params.id;
-      queryString = `SELECT * FROM user WHERE iduser=${id};`;
+
+router.post('/submit', function(req,res,next){
+      let email =  req.params.email;
+      let password =  req.params.password;
+    
+    /*
+    1. Take a username and 'password'
+    2. Check if username matches, than password (or both at the same time)
+    3. If 
+    */
+
+      queryString = `SELECT * FROM user WHERE email=${email} AND password=${password};`;
       connection.query(
         queryString,
         function(error, results, fields) {
