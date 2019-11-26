@@ -51,3 +51,5 @@ router.post('/getMessages', function (req,res){
         }
       );
 });
+
+module.exports = router;
