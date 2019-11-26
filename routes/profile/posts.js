@@ -4,8 +4,6 @@ var connection = require('../database');
 router.get('/', function(req, res, next) {
     res.send('Post api is working properly');
 });
-<<<<<<< HEAD
-=======
 
 router.get('/getAll/:id', function(req,res,next){
     let id =  req.params.id;
@@ -31,7 +29,6 @@ router.get('/getAll/:id', function(req,res,next){
     );
 });
 
->>>>>>> ec2de797f11ab5081ad8b7f08482de4585c50593
 router.post('/save', async function(req, res) {
     userId = req.body.userId
     postType = req.body.postType
