@@ -7,9 +7,9 @@ router.get('/', function(req, res, next) {
     res.send('Post api is working properly');
 });
 
-router.get('/getUser/:id', function(req,res,next){
+router.get('/:id', function(req,res,next){
       let id =  req.params.id;
-      queryString = `SELECT * FROM user WEHRE userID=${id};`;
+      queryString = `SELECT * FROM user WEHRE iduser=${id};`;
       connection.query(
         queryString,
         function(error, results, fields) {
