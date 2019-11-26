@@ -10,6 +10,8 @@ var testAPI = require('./routes/testAPI');
 var profile = require('./routes/profile/posts');
 var friends = require('./routes/profile/friends');
 var posts = require('./routes/postrelated/posts');
+var messages = require('./routes/postrelated/messages');
+
 var reservations = require('./routes/postrelated/reservation')
 const bodyParser = require("body-parser");
 
@@ -36,6 +38,7 @@ app.use('/posts', posts);
 app.use('/profile', profile);
 app.use('/friends', friends);
 app.use('/reservations', reservations);
+app.use('/messages', reservations);
 app.use(bodyParser.json({
   extended: true
 }));
