@@ -4,7 +4,6 @@ var connection = require('../database');
 router.get('/', function(req, res, next) {
     res.send('Post api is working properly');
 });
-
 router.post('/save', async function(req, res) {
     userId = req.body.userId
     postType = req.body.postType
