@@ -49,7 +49,6 @@ router.get('/request/:id', async(req, res) =>{
         }
     );
 });
-
 router.post('/request/create', async(req, res) =>{
     let id =  req.body.user1;
     let id2 = req.body.user2;
