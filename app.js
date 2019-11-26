@@ -10,6 +10,7 @@ var testAPI = require('./routes/testAPI');
 var profile = require('./routes/profile/posts');
 var friends = require('./routes/profile/friends');
 var posts = require('./routes/postrelated/posts');
+var login = require('./routes/auth/login');
 
 const bodyParser = require("body-parser");
 
@@ -35,6 +36,7 @@ app.use('/testAPI', testAPI);
 app.use('/posts', posts);
 app.use('/profile', profile);
 app.use('/friends', friends);
+app.use('/login', login);
 
 
 app.use(bodyParser.json({
