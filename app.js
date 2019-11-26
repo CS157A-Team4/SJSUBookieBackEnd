@@ -38,7 +38,7 @@ app.use('/posts', posts);
 app.use('/profile', profile);
 app.use('/friends', friends);
 app.use('/reservations', reservations);
-app.use('/messages', reservations);
+app.use('/messages', messages);
 app.use(bodyParser.json({
   extended: true
 }));
