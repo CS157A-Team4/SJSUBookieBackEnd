@@ -10,10 +10,14 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/submit', function(req,res,next){
-      let email =  req.body.email;
-      let password =  req.body.password;
+      email =  req.body.email;
+      password =  req.body.password;
+      
+    console.log("req: " + req.body)
+      console.log("email: " + email)
+      console.log("password: " + password)
     
-    /*
+      /*
     1. Take a username and 'password'
     2. Check if username matches, than password (or both at the same time)
     3. If 
