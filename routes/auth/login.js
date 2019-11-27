@@ -13,7 +13,7 @@ router.post('/submit', function(req,res,next){
       email =  req.body.email;
       password =  req.body.password;
       
-    console.log("req: " + req.body)
+    console.log("req: " + req.body.stringify())
       console.log("email: " + email)
       console.log("password: " + password)
     
