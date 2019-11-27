@@ -12,9 +12,9 @@ router.get('/', function(req, res, next) {
 router.post('/submit', function(req,res,next){
       email =  req.body.email;
       password =  req.body.password;
-      requestString = req.body.JSON.stringify()
+      
 
-      console.log("req: " + requestString)
+      
       console.log("email: " + email)
       console.log("password: " + password)
     
