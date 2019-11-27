@@ -24,7 +24,7 @@ router.post('/submit', function(req,res,next){
     3. If 
     */
 
-      queryString = `SELECT * FROM user WHERE email=${email} AND password=${password};`;
+      queryString = `SELECT * FROM user WHERE email="${email}" AND password="${password}";`;
       connection.query(
         queryString,
         function(error, results, fields) {
