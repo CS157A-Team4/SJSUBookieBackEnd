@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
 var connection = require('../database');
 
 
@@ -9,11 +8,9 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/submit', function(req,res,next){
+router.post('/submit', async function(req,res){
       email =  req.body.email;
       password =  req.body.password;
-      
-
       
       console.log("email: " + email)
       console.log("password: " + password)
