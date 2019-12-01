@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 // select friends, get all posts
 router.get('/getAll/:id', function(req,res,next){
     let id =  req.params.id;
-    queryString = `SELECT * FROM FriendsListAndRequest WHERE userID=${id};`;
+    queryString = `SELECT * FROM Posts WHERE userID=${id};`;
     connection.query(
         queryString,
         function(error, results, fields) {
