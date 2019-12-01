@@ -19,13 +19,13 @@ router.get('/getAll/:id', function(req,res,next){
                 console.log(error);
                 return res.status(400).json({
                     error: true,
-                    message: "Error getting the posts"
+                    message: "Error getting the friends list"
                 });
             }
             else{
                 return res.status(200).json({
                     error:false,
-                    message: "Successfully returned post",
+                    message: "Successfully returned friends list",
                     data: results
                 });
             }
