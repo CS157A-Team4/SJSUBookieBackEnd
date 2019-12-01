@@ -8,6 +8,31 @@ router.get('/', function(req, res, next) {
     res.send('Friends API is working properly');
 });
 
+// select friends, get all posts
+router.get('/getAll/:id', function(req,res,next){
+    let id =  req.params.id;
+    queryString = `SELECT * FROM FriendsListAndRequest WHERE userID=${id};`;
+    connection.query(
+        queryString,
+        function(error, results, fields) {
+            if (error){
+                console.log(error);
+                return res.status(400).json({
+                    error: true,
+                    message: "Error getting the posts"
+                });
+            }
+            else{
+                return res.status(200).json({
+                    error:false,
+                    message: "Successfully returned post",
+                    data: results
+                });
+            }
+        }
+    );
+});
+
 // handle the list friends request
 // req: get the request
 // res: send the response
