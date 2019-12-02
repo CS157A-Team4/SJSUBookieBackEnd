@@ -56,6 +56,7 @@ router.post('/create', async function(req, res) {
     let requestMaker = `INSERT INTO FriendsListAndRequest(user1, user2) SELECT '${seller}', '${buyer}'
     WHERE NOT EXISTS
         (SELECT * FROM FriendsListAndRequest WHERE user1 = ${seller} AND user2 =${buyer});`;
+        console.log(requestMaker);
     connection.query(
         queryString,requestMaker,
         function(error, results, fields) {
