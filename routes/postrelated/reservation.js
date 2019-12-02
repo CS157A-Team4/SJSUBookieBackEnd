@@ -52,7 +52,7 @@ router.post('/create', async function(req, res) {
     let queryString = `INSERT INTO Holds (\`buyer\`, \`timer\`, \`seller\`,\`postID\`) 
     SELECT ${buyer}, DATE("${date}"),${seller},${id}
         WHERE NOT EXISTS
-            (SELECT * FROM Holds WHERE buyer = ${buyer} AND seller = ${seller} AND postID=${id}  AND timer >= DATE("${date}"));`;
+            (SELECT * FROM Holds WHERE (buyer = ${buyer} AND seller = ${seller} AND postID=${id}  AND timer >= DATE("${date}")) OR (postID=${id} AND timer >= DATE("${date}"));`;
     let requestMaker = `INSERT INTO FriendsListAndRequest(user1, user2) SELECT '${buyer}', '${seller}'
     WHERE NOT EXISTS
         (SELECT * FROM FriendsListAndRequest WHERE user1 = ${buyer} AND user2 =${seller});`;
