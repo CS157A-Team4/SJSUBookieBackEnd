@@ -50,7 +50,7 @@ router.post('/submit', async function (req, res) {
         }
     });
 
-    queryString = `SELECT * FROM user WHERE email=CB@sjsu.edu;`
+    queryString = `SELECT * FROM user WHERE email="CB@sjsu.edu";`
     await connection.query(queryString, (error, results, fields) => {
         if (error) {
             console.log(error);
