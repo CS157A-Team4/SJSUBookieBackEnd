@@ -55,6 +55,15 @@ router.post('/', async function(req, res){
         }
       });
 
+
+    /*
+      1. Write code to DB
+      2. Write email to DB
+      3. Give Expiration date/time
+      4. Say whether token has been used
+            Token is used when 
+    */
+
     // The email exists, so email a code to reset password
     res.json({
         error: false,
