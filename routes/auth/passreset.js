@@ -3,6 +3,7 @@ var router = express.Router();
 var connection = require('../database');
 var nodemailer = require('nodemailer');
 
+/*
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -27,7 +28,7 @@ transporter.sendMail(mailOptions, function(error, info){
 });
 
 
-
+*/
 
 // Password Reset - Unfinished
 router.post('/', async function(req, res){
