@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
     res.send('Signup api is working properly');
 });
 
-router.post('/submit', async function(req,res){
+router.post('/checkExistingEmail', async function(req,res){
     let email =  req.body.email;
     let password =  req.body.password;
     let firstname = req.body.firstname;
@@ -17,10 +17,8 @@ router.post('/submit', async function(req,res){
       1. Check if email is already in system
       */
      let queryString = `SELECT email FROM user WHERE email="${email}";`;
-     let emailQuery = await connection.query(
+     await connection.query(
         queryString, (error, results, fields) => {
-            console.log(results)
-
             if (error){
               console.log(error);
                 return res.status(400).json({
@@ -29,11 +27,23 @@ router.post('/submit', async function(req,res){
               }); 
             }
             else{
+                console.log(typeof results)
                 console.log("Success getting emails")
-                res.json(results);
+                console.log(results)
+                
+                if(results.length > 0){
+                    res.json({
+                        message: "This email is already in the system!"
+                    })
+                }else{
+                    res.json({
+                        message: "This email does not yet exist. Good job!"
+                    })
+                }   
+                
             }
       });
-    console.log(emailQuery)
+
 });
 
 
