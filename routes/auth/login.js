@@ -27,12 +27,14 @@ router.post('/submit', async function(req,res){
         function(error, results, fields) {
           if (error){
               console.log(error);
-            return res.status(400).json({
-                error: true,
-                message: "Error getting the posts"
+                return res.status(400).json({
+                    error: true,
+                    message: "Error getting the posts"
               }); 
           }
           else{
+            console.log("Success!!")
+            console.log(results)
             return res.status(200).json({
                 error:false,
                 message: "Successfully returned post",
