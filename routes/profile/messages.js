@@ -32,7 +32,7 @@ router.post('/send', function(req, res) {
 router.post('/getMessages', function (req,res){
     u1 = req.body.sender;
     u2 = req.body.receiver;
-    queryString = `SELECT * FROM Message WHERE (receiver=${u1} AND sender=${u2}) OR (receiver=${u2} AND sender=${u1}) ORDER BY date;`
+    queryString = `SELECT Message.*, user.firstname, user.surname FROM Message JOIN user ON user.iduser = Message.sender WHERE (receiver=${u1} AND sender=${u2}) OR (receiver=${u2} AND sender=${u1}) ORDER BY date;`
     connection.query(queryString,
         function(error, results, fields) {
             if (error){
