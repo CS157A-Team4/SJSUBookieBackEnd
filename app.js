@@ -11,6 +11,7 @@ var profile = require('./routes/profile/posts');
 var friends = require('./routes/profile/friends');
 var posts = require('./routes/postrelated/posts');
 var login = require('./routes/auth/login');
+var passreset = require('./routes/auth/passreset');
 var signup = require('./routes/auth/signup');
 
 const bodyParser = require("body-parser");
@@ -45,6 +46,7 @@ app.use('/profile', profile);
 app.use('/friends', friends);
 app.use('/login', login);
 app.use('/signup', signup);
+app.use('/passreset', passreset);
 
 
 
