@@ -19,7 +19,7 @@ router.post('/submit', async function(req,res){
     3. If 
     */
 
-      queryString = `SELECT * FROM user WHERE email="${email}" AND password="${password}";`;
+      queryString = `SELECT schoolid, firstname, surname, email FROM user WHERE email="${email}" AND password="${password}";`;
       connection.query(
         queryString,
         function(error, results, fields) {
@@ -31,15 +31,8 @@ router.post('/submit', async function(req,res){
               }); 
           }
           else{
-            console.log("Success!!")
-            console.log(results.email)
-            console.log(typeof results)
+            console.log("Success!!")  
             res.json(results);
-    //         return res.status(200).json({
-    //             error: false,
-    //             message: "Successfully returned post",
-    //             data: results
-    //           }); 
             }
         }
       );
