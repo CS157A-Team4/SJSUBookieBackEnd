@@ -3,6 +3,7 @@ var router = express.Router();
 var connection = require('../database');
 const bcrypt = require('bcryptjs')
 
+const SALT_ROUNDS = 10
 
 router.get('/', function(req, res, next) {
     res.send('Post api is working properly');
@@ -10,13 +11,13 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/hash', async function(req, res) {
-    let password = await bcrypt.hash(req.body.password, 10);
+    let password = await bcrypt.hash(req.body.password, SALT_ROUNDS);
     res.json(password)
 })
 
 router.post('/submit', async function(req,res){
       let email =  req.body.email;
-      let password = await bcrypt.hash(req.body.password, 10);
+      let password = await bcrypt.hash(req.body.password, SALT_ROUNDS);
     
         /*
         1. Take a username and 'password'
