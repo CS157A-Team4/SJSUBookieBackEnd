@@ -50,7 +50,7 @@ router.post('/submit', async function(req,res){
 
     // CHECKING PASSWORD
     queryString = `SELECT password FROM user WHERE email="${email}";`;
-    await connection.query(queryString, (error, results, fields) => {
+    await connection.query(queryString, async function(error, results, fields){
         if (error) {
             console.log(error);
             return res.status(400).json({
