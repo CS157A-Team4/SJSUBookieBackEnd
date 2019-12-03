@@ -44,8 +44,7 @@ router.post('/', async function(req, res){
         from: process.env.EMAIL,
         to: 'colemckinnon.school@gmail.com',
         subject: 'Bookie Password Reset',
-        text: `You recently requested to change the password on your SJSU Bookie account. 
-        Enter 5 digit code below to begin the reset process.\n\nCode: ${code}`
+        text: `You recently requested to change the password on your SJSU Bookie account. Enter 5 digit code below to begin the reset process.\n\nCode: ${code}`
       };
       
       transporter.sendMail(mailOptions, function(error, info){
