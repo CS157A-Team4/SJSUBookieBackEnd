@@ -31,23 +31,6 @@ router.get('/tables',function(req, res, next) {
       }
     );
   })
-  router.get('/search', function(req, res){
-    console.log("hi");
-    let course =  req.query.course;
-    let name = req.query.bname;
-    console.log("course:" + typeof(course));
-    console.log("name: "+typeof(name));
-    if(course !== '' && name !== ''){
-        conditions = 'WHERE tb1.course = \'' + course +'\' AND tb1.title LIKE \'%' + name +'%\'';
-    }
-    else if(course !== '' && name === ''){
-      conditions = 'WHERE tb1.course = \'' + course +'\'';
-    }
-    else if(course === '' && name !== ''){
-      conditions = 'WHERE tb1.title LIKE \'%' + name+'%\'';
-    }
-  
-});
 
 router.get('/search', function (req, res) {
   console.log("hi");
