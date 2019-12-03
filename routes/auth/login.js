@@ -15,7 +15,7 @@ router.post('/hash', async function(req, res) {
 })
 
 router.post('/submit', async function(req,res){
-    let email =  req.body.email;
+    let email =  req.body.email;  
     let enteredPass = req.body.password;
     
     /*

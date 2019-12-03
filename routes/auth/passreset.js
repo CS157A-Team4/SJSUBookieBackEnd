@@ -29,7 +29,8 @@ router.post('/', async function(req, res){
     });
 
     // CODE GEN
-    let code = Math.floor(Math.random()*90000) + 10000;
+    let code = (Math.floor(Math.random()*90000) + 10000).toString(10);
+    
 
     // SENDING EMAIL
     var transporter = nodemailer.createTransport({
@@ -63,6 +64,14 @@ router.post('/', async function(req, res){
       4. Say whether token has been used
             Token is used when 
     */
+
+    // Code will expire in 7 days
+    var date = new Date();
+    date.setDate(date.getDate() + 7);
+
+    // Adding to DB
+    queryString = `INSERT INTO PasswordReset (resetToken, email, expirationTime, usedToken)
+                   VALUES ("${code}","${email}","${date}","0")`
 
     // The email exists, so email a code to reset password
     res.json({
