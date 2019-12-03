@@ -17,22 +17,23 @@ router.post('/submit', async function(req,res){
       1. Check if email is already in system
       */
      let queryString = `SELECT email FROM user WHERE email="${email}";`;
-     connection.query(
-        queryString,
-        function(error, results, fields) {
-          if (error){
+     let emailQuery = await connection.query(
+        queryString, (error, results, fields) => {
+            console.log(results)
+
+            if (error){
               console.log(error);
                 return res.status(400).json({
                     error: true,
                     message: "Error checking emails"
               }); 
-          }
-          else{
+            }
+            else{
                 console.log("Success getting emails")
                 res.json(results);
-            }
-        }
-      );
+            }
+      });
+    console.log(JSON.stringify(emailQuery))
 });
 
 
