@@ -11,8 +11,10 @@ var profile = require('./routes/profile/posts');
 var friends = require('./routes/profile/friends');
 var messages = require('./routes/profile/messages');
 var posts = require('./routes/postrelated/posts');
+var login = require('./routes/auth/login');
+var passreset = require('./routes/auth/passreset');
+var signup = require('./routes/auth/signup');
 var messages = require('./routes/profile/messages');
-
 var reservations = require('./routes/postrelated/reservation')
 const bodyParser = require("body-parser");
 
@@ -23,6 +25,12 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+
+app.use(bodyParser.json({
+  extended: true
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -38,6 +46,9 @@ app.use('/testAPI', testAPI);
 app.use('/posts', posts);
 app.use('/profile', profile);
 app.use('/friends', friends);
+app.use('/login', login);
+app.use('/signup', signup);
+app.use('/passreset', passreset);
 app.use('/reservations', reservations);
 app.use('/messages', messages);
 
