@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/getAll/:id', function(req,res,next){
     let id =  req.params.id;
-    queryPosts = `SELECT * FROM Post JOIN PostImage ON Post.imageID = Post.imageId WHERE seller=${id};`;
+    queryPosts = `SELECT * FROM Post JOIN PostImage ON PostImage.imageID = Post.imageId WHERE seller=${id};`;
     queryHolds= `SELECT * FROM Holds JOIN Post ON Holds.postID = Post.postID JOIN PostImage ON PostImage.imageID = Post.imageId WHERE buyer=${id} AND timer >= CURDATE();`;
     querySavedPosts = `SELECT * FROM SavedPost JOIN Post ON Post.postID = SavedPost.postid WHERE SavedPost.userID=${id};`;
 
