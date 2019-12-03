@@ -36,7 +36,8 @@ router.post('/submit', async function(req,res){
             });
         }
         else {
-            if (results.length == 0){
+            console.log("THE EMAIL" + results);
+            if (results.length === 0){
                 res.json({
                     error: true,
                     message: "This email does not exist in DB"
