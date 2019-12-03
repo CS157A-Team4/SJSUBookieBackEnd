@@ -12,7 +12,11 @@ router.post('/submit', async function (req, res) {
     let firstname = req.body.firstname;
     let surname = req.body.surname;
     let schoolid = req.body.schoolid;
-
+    
+    // will be the eventual response returned
+    let resObject = {
+        message: ""
+    }
     /*
           1. Check if email is already in system
     */
@@ -31,34 +35,37 @@ router.post('/submit', async function (req, res) {
             console.log(results)
 
             if (results.length > 0) {
-                res.json({
+                
+                resObject = {
                     message: "This email is already in the system!"
-                })
+                }
+                
             } else {
-                res.json({
+                resObject = {
                     message: "This email does not yet exist. Good job!"
-                })
+                }
+                
             }
 
         }
     });
 
     queryString = `SELECT * FROM user WHERE email=CB@sjsu.edu;`
-    await connection.query(
-        queryString, (error, results, fields) => {
-            if (error) {
-                console.log(error);
-                return res.status(400).json({
-                    error: true,
-                    message: "Error checking emails"
-                });
-            }
-            else {
-                console.log("Success doing second query!")
-                console.log(results)
-            }
-        });
+    await connection.query(queryString, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: true,
+                message: "Error checking emails"
+            });
+        }
+        else {
+            console.log("Success doing second query!")
+            console.log(results)
+        }
+    });
 
+    res.json(resObject)
 });
 
 
