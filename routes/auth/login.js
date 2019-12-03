@@ -16,41 +16,85 @@ router.post('/hash', async function(req, res) {
 })
 
 router.post('/submit', async function(req,res){
-      let email =  req.body.email;
-      let password = await bcrypt.hash(req.body.password, SALT_ROUNDS);
+    let email =  req.body.email;
+    let enteredPass = req.body.password;
+    //let enteredPass =  await bcrypt.hash(req.body.password, SALT_ROUNDS);
     
-        /*
-        1. Take a username and 'password'
-        2. Check if username matches, than password (or both at the same time)
-        3. If 
-        */
-      queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}" AND password="${password}";`;
-      connection.query(
-        queryString,
-        function(error, results, fields) {
-          if (error){
-              console.log(error);
-                return res.status(400).json({
-                    error: true,
-                    message: "Error logging in"
-              }); 
-          }else{
-                if(results.length > 0){
-                    console.log("Success!!")  
-                    console.log(JSON.stringify(results))
-                    res.json({
-                        error: false,
-                        data: results,
-                        message: "Successful login"})
-                }else{
-                    res.json({
-                        error: true,
-                        message: "Incorrect username or password. Please try again"
-                    })
-                }
-            }
-        }
-      );
+    /*
+        1. Check if email exists
+        2. If so, get password
+        3. compare {hashed[entered] password}  & {hashed[stored] password}
+        4. If there is a match, return data
+    */
+    //queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}" AND password="${password}";`;
+    
+    // CHECKING EMAIL
+    let queryString = `SELECT email FROM user WHERE email="${email}";`;
+    await connection.query(queryString, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: true,
+                message: "Error checking emails"
+            });
+        }
+        else {
+            if (results.length == 0){
+                res.json({
+                    error: true,
+                    message: "This email does not exist in DB"
+                })
+            }
+        }
+    });
+
+    // CHECKING PASSWORD
+    queryString = `SELECT password FROM user WHERE email="${email}";`;
+    await connection.query(queryString, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: true,
+                message: "Error getting password"
+            });
+        }
+        else {
+            if (bcrypt.compare(enteredPass, results[password])){
+                res.json({
+                    error: false,
+                    message: "Password matches!"
+                })
+            }
+        }
+    });
+
+
+    // connection.query(
+    //     queryString,
+    //     function(error, results, fields) {
+    //       if (error){
+    //           console.log(error);
+    //             return res.status(400).json({
+    //                 error: true,
+    //                 message: "Error logging in"
+    //           }); 
+    //       }else{
+    //             if(results.length > 0){
+    //                 console.log("Success!!")  
+    //                 console.log(JSON.stringify(results))
+    //                 res.json({
+    //                     error: false,
+    //                     data: results,
+    //                     message: "Successful login"})
+    //             }else{
+    //                 res.json({
+    //                     error: true,
+    //                     message: "Incorrect username or password. Please try again"
+    //                 })
+    //             }
+    //         }
+    //     }
+    //   );
 });
 
 
