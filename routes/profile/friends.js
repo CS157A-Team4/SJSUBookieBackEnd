@@ -21,13 +21,13 @@ router.get('/getAll/:id', function(req,res,next){
         function(error, results, fields) {
             if (error){
                 console.log(error);
-                return res.status(400).json({
+                res.status(400).json({
                     error: true,
                     message: "Error getting the posts"
                 });
             }
             else{
-                return res.status(200).json({
+                res.status(200).json({
                     error:false,
                     message: "Successfully returned the posts",
                     posts: results[0],
