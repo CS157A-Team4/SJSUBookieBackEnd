@@ -9,11 +9,13 @@ var usersRouter = require('./routes/users');
 var testAPI = require('./routes/testAPI');
 var profile = require('./routes/profile/posts');
 var friends = require('./routes/profile/friends');
+var messages = require('./routes/profile/messages');
 var posts = require('./routes/postrelated/posts');
 var login = require('./routes/auth/login');
 var passreset = require('./routes/auth/passreset');
 var signup = require('./routes/auth/signup');
-
+var messages = require('./routes/profile/messages');
+var reservations = require('./routes/postrelated/reservation')
 const bodyParser = require("body-parser");
 
 var app = express();
@@ -47,9 +49,12 @@ app.use('/friends', friends);
 app.use('/login', login);
 app.use('/signup', signup);
 app.use('/passreset', passreset);
+app.use('/reservations', reservations);
+app.use('/messages', messages);
 
-
-
+app.use(bodyParser.json({
+  extended: true
+}));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
