@@ -5,10 +5,12 @@ var connection = require('../database');
 
 router.post('/send', function(req, res) {
     sender = req.body.sender;
+    u1 = sender;
     receiver = req.body.receiver;
+    u2 = receiver;
     content = req.body.content;
     date = req.body.date;
-    queryString = `INSERT INTO   Message (\`receiver\`, \`sender\`, \`content\`, \`date\`) VALUES(${sender},${receiver},"${content}","${date}");`;
+    queryString = `INSERT INTO Message (\`receiver\`, \`sender\`, \`content\`, \`date\`) VALUES(${sender},${receiver},"${content}","${date}");`;
     connection.query(
         queryString,
         function(error, results, fields) {
@@ -20,10 +22,24 @@ router.post('/send', function(req, res) {
                 });
             }
             else{
-                return res.status(200).json({
-                    error: false,
-                    message: "Successfully sent message"
-                });
+                queryString = `SELECT Message.*, user.firstname, user.surname FROM Message JOIN user ON user.iduser = Message.sender WHERE (receiver=${u1} AND sender=${u2}) OR (receiver=${u2} AND sender=${u1}) ORDER BY date;`
+                connection.query(queryString,
+                    function(error, results, fields) {
+                        if (error){
+                            console.log(error);
+                            return res.status(400).json({
+                                error: true,
+                                message: "Error retrieving messages"
+                            });
+                        }
+                        else{
+                            return res.status(200).json({
+                                error: false,
+                                message: results
+                            });
+                        }
+                    }
+                )
             }
         }
     );
