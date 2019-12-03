@@ -83,7 +83,6 @@ router.post('/submit', async function (req, res) {
                 email: email,
                 firstname: firstname,
                 iduser: results[0]["iduser"]
-                
             })
         }
     });
