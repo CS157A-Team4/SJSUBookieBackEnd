@@ -33,7 +33,7 @@ router.post('/submit', async function(req,res){
                 res.json(results);
             }
       });
-    console.log(JSON.stringify(emailQuery))
+    console.log(emailQuery)
 });
 
 
