@@ -28,6 +28,10 @@ router.post('/', async function(req, res){
         }
     });
 
+    // CODE GEN
+    let code = Math.floor(Math.random()*90000) + 10000;
+
+    // SENDING EMAIL
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -39,8 +43,9 @@ router.post('/', async function(req, res){
       var mailOptions = {
         from: process.env.EMAIL,
         to: 'colemckinnon.school@gmail.com',
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!'
+        subject: 'Bookie Password Reset',
+        text: `You recently requested to change the password on your SJSU Bookie account. 
+               Enter 5 digit code below to begin the reset process.\nCode: ${code}`
       };
       
       transporter.sendMail(mailOptions, function(error, info){

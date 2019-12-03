@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/tables',function(req, res, next) {
-      console.log("hi");
+    console.log("hi");
     connection.query(
       "SELECT * FROM user;", 
       function(error, results, fields) {
