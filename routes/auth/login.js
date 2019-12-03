@@ -1,20 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var connection = require('../database');
+const bcrypt = require('bcryptjs')
+
 
 router.get('/', function(req, res, next) {
     res.send('Post api is working properly');
 });
 
 router.post('/submit', async function(req,res){
-      email =  req.body.email;
-      password =  req.body.password;
+      let email =  req.body.email;
+      let password = await bcrypt.hash(req.body.password, 10);
     
-      /*
-    1. Take a username and 'password'
-    2. Check if username matches, than password (or both at the same time)
-    3. If 
-    */
+        /*
+        1. Take a username and 'password'
+        2. Check if username matches, than password (or both at the same time)
+        3. If 
+        */
       queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}" AND password="${password}";`;
       connection.query(
         queryString,
@@ -39,7 +41,6 @@ router.post('/submit', async function(req,res){
                         message: "Incorrect username or password. Please try again"
                     })
                 }
-                
             }
         }
       );

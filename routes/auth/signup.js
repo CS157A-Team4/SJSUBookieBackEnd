@@ -8,11 +8,11 @@ router.get('/', function (req, res, next) {
 
 router.post('/submit', async function (req, res) {
     let email = req.body.email;
-    let password = req.body.password;
+    let password = await bcrypt.hash(req.body.password, 10);
     let firstname = req.body.firstname;
     let surname = req.body.surname;
     let schoolid = req.body.schoolid;
-    
+
     /*
           1. Check if email is already in system
     */
