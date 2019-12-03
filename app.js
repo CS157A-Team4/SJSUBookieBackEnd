@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var testAPI = require('./routes/testAPI');
 var profile = require('./routes/profile/posts');
 var friends = require('./routes/profile/friends');
+var messages = require('./routes/profile/messages');
 var posts = require('./routes/postrelated/posts');
 var messages = require('./routes/profile/messages');
 
@@ -39,6 +40,7 @@ app.use('/profile', profile);
 app.use('/friends', friends);
 app.use('/reservations', reservations);
 app.use('/messages', messages);
+
 app.use(bodyParser.json({
   extended: true
 }));
