@@ -32,7 +32,7 @@ router.post('/submit', async function(req,res){
           }
           else{
             console.log("Success!!")
-            console.log(results)
+            console.log(results.email)
             console.log(typeof results)
             res.json(results);
     //         return res.status(200).json({
