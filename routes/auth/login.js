@@ -23,12 +23,20 @@ router.post('/submit', async function(req,res){
               console.log(error);
                 return res.status(400).json({
                     error: true,
-                    message: "Error getting the posts"
+                    message: "Error logging in"
               }); 
           }
           else{
-                console.log("Success!!")  
-                res.json(results);
+                if(results.length > 0){
+                    console.log("Success!!")  
+                    console.log(JSON.stringify(results))
+                    res.json(results)
+                }else{
+                    res.json({
+                        message: "Incorrect username or password. Please try again"
+                    })
+                }
+                
             }
         }
       );

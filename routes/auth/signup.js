@@ -38,7 +38,9 @@ router.post('/submit', async function (req, res) {
         }
     });
 
-    
+    /*
+          2. Insert new user into system
+    */
     queryString = `INSERT INTO user (schoolid, firstname, surname, email, password) 
                    VALUES ("${schoolid}", "${firstname}", "${surname}", "${email}", "${password}");`
 
