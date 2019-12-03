@@ -11,6 +11,8 @@ router.get('/getAll/:id', function(req,res,next){
     queryHolds= `SELECT * FROM Holds JOIN Post ON Holds.postID = Post.postID JOIN PostImage ON PostImage.imageID = Post.imageId JOIN user ON user.iduser = Post.seller WHERE buyer=${id} AND timer >= CURDATE();`;
     querySavedPosts = `SELECT * FROM SavedPost JOIN Post ON Post.postID = SavedPost.postid JOIN user ON user.iduser = Post.seller WHERE SavedPost.userID=${id};`;
 
+    console.log("Hello");
+    
     connection.query( queryPosts + queryHolds + querySavedPosts,
         function(error, results, fields) {
             if (error){
