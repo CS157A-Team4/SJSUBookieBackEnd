@@ -8,7 +8,7 @@ router.post('/send', function(req, res) {
     receiver = req.body.receiver;
     content = req.body.content;
     date = req.body.date;
-    queryString = `INSERT INTO   Message (\`receiver\`, \`sender\`, \`content\`, \`date\`) VALUES(${sender},${receiver},"${content}","${date}");`;
+    queryString = `INSERT INTO Message(\`receiver\`, \`sender\`, \`content\`, \`date\`) VALUES(${sender},${receiver},"${content}","${date}");`;
     connection.query(
         queryString,
         function(error, results, fields) {
@@ -16,7 +16,8 @@ router.post('/send', function(req, res) {
               console.log(error);
             return res.status(400).json({
                 error: true,
-                message: "Error sending the messsage"
+                message: "Error sending the messsage",
+                results:error
               }); 
           }
           else{
