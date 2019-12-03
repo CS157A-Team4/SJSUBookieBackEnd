@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 router.get('/getAll/:id', function(req,res,next){
     let id =  req.params.id;
     queryPosts = `SELECT Post.*, COALESCE(tb4.hold,0), user.firstname, user.surname, PostImage.image AS 'hold' FROM Post JOIN PostImage ON PostImage.imageID = Post.imageId JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =Post.postID WHERE seller=${id};`;
-    queryHolds= `SELECT Post.*, user.firstname, user.surname, PostImage.image COALESCE(tb4.hold,0) AS 'hold'FROM Holds JOIN Post ON Holds.postID = Post.postID JOIN PostImage ON PostImage.imageID = Post.imageId JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =Post.postID WHERE buyer=${id} AND timer >= CURDATE();`;
+    queryHolds= `SELECT Post.*, user.firstname, user.surname, PostImage.imageID COALESCE(tb4.hold,0) AS 'hold'FROM Holds JOIN Post ON Holds.postID = Post.postID JOIN PostImage ON PostImage.imageID = Post.imageId JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =Post.postID WHERE buyer=${id} AND timer >= CURDATE();`;
     querySavedPosts = `SELECT Post.*, user.firstname,user.surname, SavedPost.imageID AS image, COALESCE(tb4.hold,0) AS 'hold' FROM SavedPost JOIN Post ON Post.postID = SavedPost.postid JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =Post.postID WHERE SavedPost.userID=${id};`;
 
 
