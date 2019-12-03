@@ -35,6 +35,7 @@ router.post('/submit', async function(req,res){
           else{
             console.log("Success!!")
             console.log(results)
+            console.log(typeof results)
             return res.status(200).json({
                 error:false,
                 message: "Successfully returned post",
