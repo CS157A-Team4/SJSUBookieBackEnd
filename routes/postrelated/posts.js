@@ -37,7 +37,7 @@ router.post('/edit', async function(req, res) {
   id = req.body.id;
   imageId = req.body.imageId;
   console.log(imageId);
-  imageString = `UPDATE PostImage SET \`Image\` = "${image}" WHERE \`imageID\`=${imageId}`;
+  imageString = `UPDATE PostImage SET \`image\` = "${image}" WHERE \`imageID\`=${imageId}`;
   console.log(imageString);
   connection.query(
       imageString,
@@ -71,7 +71,7 @@ router.post('/create', async function(req, res) {
     price = req.body.price;
     poster = req.body.poster;
     today = req.body.date;
-    imageString = `INSERT INTO PostImage (\`postId\`, \`Image\`) VALUES(0,"${image}");`;
+    imageString = `INSERT INTO PostImage (\`image\`,\`posted\`) VALUES("${image}",1);`;
     connection.query(
         imageString,
         function(error, results, fields) {
