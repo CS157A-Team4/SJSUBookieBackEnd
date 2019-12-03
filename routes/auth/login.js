@@ -17,7 +17,12 @@ router.post('/hash', async function(req, res) {
 router.post('/submit', async function(req,res){
     let email =  req.body.email;
     let enteredPass = req.body.password;
-    
+    if(enteredPass.length === 0 || email.length === 0){
+        return res.status(400).json({
+            error: true,
+            message: "There is an empty input"
+        });
+    }
     /*
         1. Check if email exists
         2. If so, get password
