@@ -56,7 +56,9 @@ router.post('/submit', async function (req, res) {
             console.log("Success doing second query!")
             res.json({
                 message: "Successfully created user!",
-                email: email
+                email: email,
+                firstname: firstname,
+                iduser: iduser
             })
         }
     });
