@@ -15,7 +15,7 @@ router.post('/submit', async function(req,res){
     2. Check if username matches, than password (or both at the same time)
     3. If 
     */
-      queryString = `SELECT schoolid, firstname, surname, email FROM user WHERE email="${email}" AND password="${password}";`;
+      queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}" AND password="${password}";`;
       connection.query(
         queryString,
         function(error, results, fields) {
@@ -25,14 +25,17 @@ router.post('/submit', async function(req,res){
                     error: true,
                     message: "Error logging in"
               }); 
-          }
-          else{
+          }else{
                 if(results.length > 0){
                     console.log("Success!!")  
                     console.log(JSON.stringify(results))
-                    res.json(results)
+                    res.json({
+                        error: false,
+                        data: results,
+                        message: "Successful login"})
                 }else{
                     res.json({
+                        error: true,
                         message: "Incorrect username or password. Please try again"
                     })
                 }
