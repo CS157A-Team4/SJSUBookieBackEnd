@@ -29,12 +29,7 @@ router.post('/submit', async function(req,res){
           }
           else{
                 console.log("Success getting emails")
-                if(!results){
-                    res.json({
-                        message: "No matching email"
-                    })
-                }  
-                //res.json(results);
+                res.json(results);
             }
         }
       );
