@@ -46,7 +46,7 @@ router.get('/tables',function(req, res, next) {
     else if(course === '' && name !== ''){
       conditions = 'WHERE tb1.title LIKE \'%' + name+'%\'';
     }
-  );
+  
 });
 
 router.get('/search', function (req, res) {
