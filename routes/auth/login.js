@@ -36,7 +36,7 @@ router.post('/submit', async function(req,res){
             });
         }
         else {
-            console.log("THE EMAIL" + results);
+            console.log("THE EMAIL" + results.length);
             if (results.length === 0){
                 res.json({
                     error: true,
@@ -58,6 +58,7 @@ router.post('/submit', async function(req,res){
         }
         else {
             let passwordMatch = await bcrypt.compare(enteredPass, results[0]["password"])
+            console.log(passwordMatch);
             if (!passwordMatch){
                 res.json({
                     error: true,
