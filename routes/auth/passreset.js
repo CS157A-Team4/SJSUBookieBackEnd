@@ -3,7 +3,7 @@ var router = express.Router();
 var connection = require('../database');
 
 // Password Reset - Unfinished
-router.post('/forgot', async function(req, res){
+router.post('/passreset', async function(req, res){
     let email = req.body.email
 
     // CHECKING EMAIL
