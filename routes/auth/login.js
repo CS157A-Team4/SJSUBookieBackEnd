@@ -59,10 +59,16 @@ router.post('/submit', async function(req,res){
             });
         }
         else {
+            console.log(JSON.stringify(results))
             if (bcrypt.compare(enteredPass, results.password)){
                 res.json({
                     error: false,
                     message: "Password matches!"
+                })
+            }else{
+                res.json({
+                    error: true,
+                    message: "I don't think that password matches"
                 })
             }
         }
