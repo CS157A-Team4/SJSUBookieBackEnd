@@ -52,16 +52,43 @@ router.post('/submit', async function (req, res) {
                 error: true,
                 message: "Error creating new users"
             });
+        }else{
+            console.log("Added user to DB!")
+        }
+        // else {
+        //     console.log("Success doing second query!")
+        //     res.json({
+        //         message: "Successfully created user!",
+        //         email: email,
+        //         firstname: firstname
+                
+        //     })
+        // }
+    });
+    
+     /*
+          3. Getting iduser and sending back response
+    */
+    queryString = `SELECT iduser FROM user WHERE email="${email}";`;
+    await connection.query(queryString, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: true,
+                message: "Error getting iduser"
+            });
         }else {
-            console.log("Success doing second query!")
             res.json({
                 message: "Successfully created user!",
                 email: email,
-                firstname: firstname
+                firstname: firstname,
+                iduser: results[0]["iduser"]
                 
             })
         }
     });
+
+
 });
 
 
