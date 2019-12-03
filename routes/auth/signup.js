@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
     res.send('Signup api is working properly');
 });
 
-router.post('/checkExistingEmail', async function(req,res){
+router.post('/submit', async function(req,res){
     let email =  req.body.email;
     let password =  req.body.password;
     let firstname = req.body.firstname;
@@ -40,7 +40,7 @@ router.post('/checkExistingEmail', async function(req,res){
                         message: "This email does not yet exist. Good job!"
                     })
                 }   
-                
+
             }
       });
 
