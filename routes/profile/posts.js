@@ -65,7 +65,7 @@ router.post('/save', async function(req, res) {
     router.post('/unsave', async function(req, res) {
         userId = req.body.userId
         postId = req.body.postId;
-        queryString = `DELETE FROM SavedPost WHERE \`userID\`="${userId}" AND \`postType\` ="favorite" AND \`ID_Post\`="${postId}";`;
+        queryString = `DELETE FROM SavedPost WHERE \`userID\`="${userId}" AND \`postType\` ="favorite" AND \`postid\`="${postId}";`;
         console.log(queryString);
         connection.query(
             queryString,

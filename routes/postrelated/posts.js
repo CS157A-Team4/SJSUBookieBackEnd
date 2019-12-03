@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
 });
 router.get('/:id', async (req, res) =>{
   let id =  req.params.id;
-  let queryString = `SELECT tb1.*, tb2.firstname, tb2.surname,tb3.image FROM Post tb1 JOIN user tb2 on tb1.seller = tb2.iduser JOIN PostImage tb3 ON tb3.imageID = tb1.imageId WHERE tb1.postID=${id};`;
+  let queryString = `SELECT tb1.*, tb2.firstname, tb2.surname, tb3.image, (SELECT CASE WHEN EXISTS( SELECT * FROM Holds WHERE Holds.postID = ${id} AND Holds.timer >= CURDATE()) THEN 1 ELSE 0 END FROM DUAL) AS 'hold' FROM Post tb1 JOIN user tb2 ON tb1.seller = tb2.iduser JOIN PostImage tb3 ON tb3.imageID = tb1.imageId WHERE tb1.postid = ${id};`;
   let commentString= `SELECT tb1.*, tb2.firstname, tb2.surname FROM comments tb1 JOIN user tb2 on tb1.poster= tb2.iduser WHERE tb1.postID=${id};`;
   let saveString = `SELECT userID FROM SavedPost WHERE postid=${id};`
   connection.query(queryString+commentString+saveString,
@@ -136,7 +136,7 @@ router.post('/create', async function(req, res) {
     router.delete('/delete', async function(req, res) {
       postId = req.body.postId;
       imageId = req.body.imageId;
-      let deleteStatement = `DELETE t1, t2, t3, t4 FROM Post as t1 LEFT JOIN comments as t2 ON t2.postid = t1.postID LEFT JOIN SavedPost as t3 ON t3.postid = t1.postID LEFT JOIN PostImage as t4 ON t4.imageID = ${imageId} WHERE t1.postID=${postId};`;
+      let deleteStatement = `DELETE t1, t2, t3, t4, t5 FROM Post as t1 LEFT JOIN comments as t2 ON t2.postid = t1.postID LEFT JOIN SavedPost as t3 ON t3.postid = t1.postID LEFT JOIN PostImage as t4 ON t4.imageID = ${imageId} LEFT JOIN Holds as t5 ON t5.postID = t1.postID WHERE t1.postID=${postId} ;`;
       console.log(deleteStatement);
       connection.query(deleteStatement,
         function(error,results,fields){
@@ -151,9 +151,26 @@ router.post('/create', async function(req, res) {
             console.log(results);
               return res.status(200).json({
                 error:false,
-                message:"Deleted the post, comments, and any saved post regarding this post."
+                message:"Deleted the post, comments, holds and any saved post regarding this post."
               });
           }
         });
   });
+  router.post('/messages/addmessage/', (req, res) => {
+    
+        console.log(req.body)
+        
+        const title = req.body.title
+        const body = req.body.body
+        
+        const INSERT_MESSAGE_QUERY = `INSERT INTO tester (\`title\`, \`body\`) VALUES ( '${title}', '${body}');`
+        connection.query(INSERT_MESSAGE_QUERY, (err, results) => {
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.send('successfully added post')
+            }
+        })
+    })
 module.exports = router;

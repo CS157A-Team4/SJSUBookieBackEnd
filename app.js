@@ -11,6 +11,9 @@ var profile = require('./routes/profile/posts');
 var friends = require('./routes/profile/friends');
 var messages = require('./routes/profile/messages');
 var posts = require('./routes/postrelated/posts');
+var messages = require('./routes/profile/messages');
+
+var reservations = require('./routes/postrelated/reservation')
 const bodyParser = require("body-parser");
 
 var app = express();
@@ -35,7 +38,9 @@ app.use('/testAPI', testAPI);
 app.use('/posts', posts);
 app.use('/profile', profile);
 app.use('/friends', friends);
-app.use('/messages', messages)
+app.use('/reservations', reservations);
+app.use('/messages', messages);
+
 app.use(bodyParser.json({
   extended: true
 }));
