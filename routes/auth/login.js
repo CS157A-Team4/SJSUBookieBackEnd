@@ -11,9 +11,7 @@ router.get('/', function(req, res, next) {
 router.post('/submit', async function(req,res){
       email =  req.body.email;
       password =  req.body.password;
-      
-      console.log("email: " + email)
-      console.log("password: " + password)
+    
     
       /*
     1. Take a username and 'password'
@@ -35,7 +33,7 @@ router.post('/submit', async function(req,res){
           else{
             console.log("Success!!")
             console.log(results)
-            
+            console.log(typeof results)
             res.json(results);
     //         return res.status(200).json({
     //             error: false,
@@ -43,7 +41,6 @@ router.post('/submit', async function(req,res){
     //             data: results
     //           }); 
             }
-
         }
       );
 });
