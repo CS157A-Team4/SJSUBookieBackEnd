@@ -9,7 +9,6 @@ router.get('/', function(req, res, next) {
     res.send('Post api is working properly');
 });
 
-
 router.post('/hash', async function(req, res) {
     let password = await bcrypt.hash(req.body.password, SALT_ROUNDS);
     res.json(password)

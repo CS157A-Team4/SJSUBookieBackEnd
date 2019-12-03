@@ -3,7 +3,7 @@ var router = express.Router();
 var connection = require('../database');
 
 // Password Reset - Unfinished
-router.post('/passreset', async function(req, res){
+router.post('/', async function(req, res){
     let email = req.body.email
 
     // CHECKING EMAIL
@@ -25,7 +25,6 @@ router.post('/passreset', async function(req, res){
             }
         }
     });
-
 
 
     // The email exists, so email a code to reset password
