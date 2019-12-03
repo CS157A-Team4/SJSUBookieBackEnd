@@ -30,27 +30,33 @@ router.post('/submit', async function (req, res) {
             console.log("Success getting emails")
             console.log(results)
 
-            if (results.length > 0)
-                res.json("This email is already in the system")
+            if (results.length > 0){
+                res.json({
+                    message: "This email is already in the system"
+                })
+            }
         }
     });
 
-    queryString = `SELECT * FROM user WHERE email="CB@sjsu.edu";`
+    
+    queryString = `INSERT INTO user (schoolid, firstname, surname, email, password) 
+                   VALUES ("${schoolid}", "${firstname}", "${surname}", "${email}", "${password}");`
+
     await connection.query(queryString, (error, results, fields) => {
         if (error) {
             console.log(error);
             return res.status(400).json({
                 error: true,
-                message: "Error checking emails"
+                message: "Error creating new users"
             });
-        }
-        else {
+        }else {
             console.log("Success doing second query!")
-            console.log(results)
+            res.json({
+                message: "Successfully created user!",
+                email: email
+            })
         }
     });
-
-    
 });
 
 
