@@ -38,7 +38,7 @@ router.post('/save', async function(req, res) {
     userId = req.body.userId
     postType = req.body.postType
     postId = req.body.postId;
-    
+
     //checkString = `SELECT * FROM SavedPost WHERE \`userId\`="${userId}" AND \`ID_POST\="${postId};`
     queryString = `INSERT INTO SavedPost(\`userID\`, \`postType\`, \`ID_Post\`) \
     VALUES(${userId},"favorite", ${postId});`;
