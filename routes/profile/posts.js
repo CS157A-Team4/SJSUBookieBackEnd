@@ -38,10 +38,10 @@ router.post('/save', async function(req, res) {
     userId = req.body.userId
     postType = req.body.postType
     postId = req.body.postId;
-    imageId = req.body.imageId;
+    
     //checkString = `SELECT * FROM SavedPost WHERE \`userId\`="${userId}" AND \`ID_POST\="${postId};`
-    queryString = `INSERT INTO SavedPost(\`userID\`, \`postType\`, \`ID_Post\`,\`imageID\`) \
-    VALUES(${userId},"favorite", ${postId},"${imageId}");`;
+    queryString = `INSERT INTO SavedPost(\`userID\`, \`postType\`, \`ID_Post\`) \
+    VALUES(${userId},"favorite", ${postId});`;
     console.log(queryString);
     connection.query(
         queryString,
