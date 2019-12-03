@@ -9,36 +9,36 @@ router.get('/', function(req, res, next) {
 });
 
 // select friends, get all posts
-router.get('/getAll/:id', function(req,res,next){
-    let id =  req.params.id;
-    queryPosts = `SELECT * FROM Post WHERE seller=${id};`;
-    queryHolds = `SELECT * FROM Holds WHERE buyer=${id} AND timer >= CURDATE();`;
-    querySavedPosts = `SELECT * FROM SavedPost JOIN Post ON Post.postID = SavedPost.postid WHERE SavedPost.userID=${id};`;
-
-
-
-    connection.query( queryPosts + queryHolds + querySavedPosts,
-        function(error, results, fields) {
-            if (error){
-                console.log(error);
-                res.status(400).json({
-                    error: true,
-                    message: "Error getting the posts"
-                });
-            }
-            else{
-                res.status(200).json({
-                    error:false,
-                    message: "Successfully returned the posts",
-                    posts: results[0],
-                    holds: results[1],
-                    saved: results[2]
-
-                });
-            }
-        }
-    );
-});
+// router.get('/getAll/:id', function(req,res,next){
+//     let id =  req.params.id;
+//     queryPosts = `SELECT * FROM Post WHERE seller=${id};`;
+//     queryHolds = `SELECT * FROM Holds WHERE buyer=${id} AND timer >= CURDATE();`;
+//     querySavedPosts = `SELECT * FROM SavedPost JOIN Post ON Post.postID = SavedPost.postid WHERE SavedPost.userID=${id};`;
+//
+//
+//
+//     connection.query( queryPosts + queryHolds + querySavedPosts,
+//         function(error, results, fields) {
+//             if (error){
+//                 console.log(error);
+//                 res.status(400).json({
+//                     error: true,
+//                     message: "Error getting the posts"
+//                 });
+//             }
+//             else{
+//                 res.status(200).json({
+//                     error:false,
+//                     message: "Successfully returned the posts",
+//                     posts: results[0],
+//                     holds: results[1],
+//                     saved: results[2]
+//
+//                 });
+//             }
+//         }
+//     );
+// });
 
 // handle the list friends request
 // req: get the request

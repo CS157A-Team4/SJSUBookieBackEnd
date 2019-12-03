@@ -7,22 +7,29 @@ router.get('/', function(req, res, next) {
 
 router.get('/getAll/:id', function(req,res,next){
     let id =  req.params.id;
-    queryString = `SELECT * FROM SavedPost JOIN Post USING (postid) WHERE userID=${id};`;
-    connection.query(
-        queryString,
+    queryPosts = `SELECT * FROM Post WHERE seller=${id};`;
+    queryHolds = `SELECT * FROM Holds WHERE buyer=${id} AND timer >= CURDATE();`;
+    querySavedPosts = `SELECT * FROM SavedPost JOIN Post ON Post.postID = SavedPost.postid WHERE SavedPost.userID=${id};`;
+
+
+
+    connection.query( queryPosts + queryHolds + querySavedPosts,
         function(error, results, fields) {
             if (error){
                 console.log(error);
-                return res.status(400).json({
+                res.status(400).json({
                     error: true,
                     message: "Error getting the posts"
                 });
             }
             else{
-                return res.status(200).json({
+                res.status(200).json({
                     error:false,
-                    message: "Successfully returned post",
-                    data: results
+                    message: "Successfully returned the posts",
+                    posts: results[0],
+                    holds: results[1],
+                    saved: results[2]
+
                 });
             }
         }
