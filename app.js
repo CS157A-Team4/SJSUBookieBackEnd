@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 var testAPI = require('./routes/testAPI');
 var profile = require('./routes/profile/posts');
 var friends = require('./routes/profile/friends');
-var messages = requre('./routes/profile/messages');
+var messages = require('./routes/profile/messages');
 var posts = require('./routes/postrelated/posts');
 const bodyParser = require("body-parser");
 
@@ -35,6 +35,7 @@ app.use('/testAPI', testAPI);
 app.use('/posts', posts);
 app.use('/profile', profile);
 app.use('/friends', friends);
+app.use('/messages', messages)
 app.use(bodyParser.json({
   extended: true
 }));
