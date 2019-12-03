@@ -69,7 +69,7 @@ router.post('/submit', async function(req,res){
     });
 
     // FINALLY GETTING INFO
-    queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}" AND password="${password}";`;
+    queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}";`;
     await connection.query(queryString, async function(error, results, fields){
         if (error) {
             console.log(error);
