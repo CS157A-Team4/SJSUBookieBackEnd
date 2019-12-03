@@ -57,8 +57,8 @@ router.post('/submit', async function (req, res) {
             res.json({
                 message: "Successfully created user!",
                 email: email,
-                firstname: firstname,
-                iduser: iduser
+                firstname: firstname
+                
             })
         }
     });
