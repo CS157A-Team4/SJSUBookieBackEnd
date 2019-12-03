@@ -17,7 +17,7 @@ router.post('/submit', async function (req, res) {
     /*
           1. Check if email is already in system
     */
-    let queryString = `SELECT email FROM user WHERE email="${email}";`;
+    let queryString = `SELECT email FROM user WHERE email="${email} OR schoolid=${schoolid}";`;
     await connection.query(queryString, (error, results, fields) => {
         if (error) {
             console.log(error);
@@ -33,7 +33,7 @@ router.post('/submit', async function (req, res) {
 
             if (results.length > 0){
                 res.json({
-                    message: "This email is already in the system"
+                    message: "This email or id is already in the system"
                 })
             }
         }
