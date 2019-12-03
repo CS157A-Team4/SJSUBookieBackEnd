@@ -27,7 +27,7 @@ router.post('/submit', async function (req, res) {
             });
         }
         else {
-            console.log(typeof results)
+            
             console.log("Success getting emails")
             console.log(results)
 
