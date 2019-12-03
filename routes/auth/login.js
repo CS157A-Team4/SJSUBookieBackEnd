@@ -49,7 +49,7 @@ router.post('/submit', async function(req,res){
     // CHECKING PASSWORD
     queryString = `SELECT password FROM user WHERE email="${email}";`;
     await connection.query(queryString, async function(error, results, fields){
-        if (error || results[0]["password"] === null || results[0]["password"] === undefined) {
+        if (error || results.length === 0) {
             console.log(error);
             return res.status(400).json({
                 error: true,
@@ -70,7 +70,7 @@ router.post('/submit', async function(req,res){
     // FINALLY GETTING INFO
     queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}";`;
     await connection.query(queryString, async function(error, results, fields){
-        if (error) {
+        if (error || results.length === 0) {
             console.log(error);
             return res.status(400).json({
                 error: true,
