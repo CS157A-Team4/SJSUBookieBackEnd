@@ -18,7 +18,6 @@ router.post('/hash', async function(req, res) {
 router.post('/submit', async function(req,res){
     let email =  req.body.email;
     let enteredPass = req.body.password;
-    //let enteredPass =  await bcrypt.hash(req.body.password, SALT_ROUNDS);
     
     /*
         1. Check if email exists
@@ -26,7 +25,6 @@ router.post('/submit', async function(req,res){
         3. compare {hashed[entered] password}  & {hashed[stored] password}
         4. If there is a match, return data
     */
-    //queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}" AND password="${password}";`;
     
     // CHECKING EMAIL
     let queryString = `SELECT email FROM user WHERE email="${email}";`;
@@ -59,16 +57,9 @@ router.post('/submit', async function(req,res){
             });
         }
         else {
-            console.log(JSON.stringify(results))
-            console.log(results[0]["password"])
             let passwordMatch = await bcrypt.compare(enteredPass, results[0]["password"])
 
-            if (passwordMatch){
-                res.json({
-                    error: false,
-                    message: "Password matches!"
-                })
-            }else{
+            if (!passwordMatch){
                 res.json({
                     error: true,
                     message: "I don't think that password matches"
@@ -77,33 +68,24 @@ router.post('/submit', async function(req,res){
         }
     });
 
-
-    // connection.query(
-    //     queryString,
-    //     function(error, results, fields) {
-    //       if (error){
-    //           console.log(error);
-    //             return res.status(400).json({
-    //                 error: true,
-    //                 message: "Error logging in"
-    //           }); 
-    //       }else{
-    //             if(results.length > 0){
-    //                 console.log("Success!!")  
-    //                 console.log(JSON.stringify(results))
-    //                 res.json({
-    //                     error: false,
-    //                     data: results,
-    //                     message: "Successful login"})
-    //             }else{
-    //                 res.json({
-    //                     error: true,
-    //                     message: "Incorrect username or password. Please try again"
-    //                 })
-    //             }
-    //         }
-    //     }
-    //   );
+    // FINALLY GETTING INFO
+    queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}" AND password="${password}";`;
+    await connection.query(queryString, async function(error, results, fields){
+        if (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: true,
+                message: "Error getting user information"
+            });
+        }
+        
+        // The information returned
+        res.json({
+            error: false,
+            data: results,
+            message: "Logged in!"
+        })
+    });
 });
 
 
