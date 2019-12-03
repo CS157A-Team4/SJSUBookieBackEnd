@@ -35,16 +35,9 @@ router.post('/submit', async function (req, res) {
             console.log(results)
 
             if (results.length > 0) {
-                
-                resObject = {
-                    message: "This email is already in the system!"
-                }
-                
+                resObject.message = "This email is already in the system"
             } else {
-                resObject = {
-                    message: "This email does not yet exist. Good job!"
-                }
-                
+                resObject.message = "This email does not yet exist. Good job!"
             }
 
         }
