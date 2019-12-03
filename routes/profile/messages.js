@@ -24,7 +24,7 @@ router.post('/send', function(req, res) {
                 });
             }
             else{
-                queryString = `SELECT Message.*, user.firstname, user.surname FROM Message JOIN user ON user.iduser = Message.sender WHERE (receiver=${u1} AND sender=${u2}) OR (receiver=${u2} AND sender=${u1}) ORDER BY date;`
+                queryString = `SELECT Message.*, user.firstname, user.surname FROM Message JOIN user ON user.iduser = Message.sender WHERE (receiver=${receiver} AND sender=${sender}) OR (receiver=${sender} AND sender=${receiver}) ORDER BY date;`
                 connection.query(queryString,
                     function(error, results, fields) {
                         if (error){
