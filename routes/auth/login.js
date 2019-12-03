@@ -60,8 +60,9 @@ router.post('/submit', async function(req,res){
         }
         else {
             console.log(JSON.stringify(results))
-            console.log(results.password)
+            console.log(results[password])
             console.log(typeof results.password)
+
             if (bcrypt.compare(enteredPass, results.password)){
                 res.json({
                     error: false,
