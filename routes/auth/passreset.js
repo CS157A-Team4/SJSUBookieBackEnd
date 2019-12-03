@@ -71,7 +71,20 @@ router.post('/', async function(req, res){
 
     // Adding to DB
     queryString = `INSERT INTO PasswordReset (resetToken, email, expirationTime, usedToken)
-                   VALUES ("${code}","${email}","${date}","0")`
+                   VALUES ("${code}","${email}","${date}","0");`
+
+    await connection.query(queryString, (error, results, fields) => {
+    if (error) {
+        console.log(error);
+        return res.status(400).json({
+            error: true,
+            message: "Error adding to PasswordReset"
+        });
+    }else{
+        console.log("Added PasswordReset to DB!")
+    }
+    
+});
 
     // The email exists, so email a code to reset password
     res.json({
