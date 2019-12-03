@@ -10,7 +10,7 @@ router.post('/send', function(req, res) {
     u2 = receiver;
     content = req.body.content;
     date = req.body.date;
-    queryString = `INSERT INTO \`Message\` (\`receiver\`, \`sender\`, \`content\`, \`date\`) VALUES(${sender},${receiver},"${content}","${date}");`;
+    queryString = `INSERT INTO \`Message\`(\`receiver\`, \`sender\`, \`content\`, \`date\`) VALUES(${sender},${receiver},"${content}","${date}");`;
     connection.query(
         queryString,
         function(error, results, fields) {
