@@ -7,9 +7,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/getAll/:id', function(req,res,next){
     let id =  req.params.id;
-    queryPosts = `SELECT * FROM Post JOIN PostImage ON PostImage.imageID = Post.imageId JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =tb1.postID WHERE seller=${id};`;
-    queryHolds= `SELECT * FROM Holds JOIN Post ON Holds.postID = Post.postID JOIN PostImage ON PostImage.imageID = Post.imageId JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =tb1.postID WHERE buyer=${id} AND timer >= CURDATE();`;
-    querySavedPosts = `SELECT *, SavedPost.imageID AS image FROM SavedPost JOIN Post ON Post.postID = SavedPost.postid JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =tb1.postID WHERE SavedPost.userID=${id};`;
+    queryPosts = `SELECT * FROM Post JOIN PostImage ON PostImage.imageID = Post.imageId JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =Post.postID WHERE seller=${id};`;
+    queryHolds= `SELECT * FROM Holds JOIN Post ON Holds.postID = Post.postID JOIN PostImage ON PostImage.imageID = Post.imageId JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =Post.postID WHERE buyer=${id} AND timer >= CURDATE();`;
+    querySavedPosts = `SELECT *, SavedPost.imageID AS image FROM SavedPost JOIN Post ON Post.postID = SavedPost.postid JOIN user ON user.iduser = Post.seller LEFT JOIN (SELECT Holds.postID, Holds.hold FROM Holds WHERE Holds.timer >= CURDATE()) tb4 ON tb4.postID =Post.postID WHERE SavedPost.userID=${id};`;
 
 
     connection.query( queryPosts + queryHolds + querySavedPosts,
