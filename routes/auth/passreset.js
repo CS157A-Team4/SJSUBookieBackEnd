@@ -69,8 +69,8 @@ router.post('/', async function(req, res){
     var date = new Date();
     date.setDate(date.getDate() + 7);
     console.log("date default: " + date)
-    date.toISOString()
-    console.log("date after: " + date)
+    
+    console.log("date after: " + date.toISOString())
 
     // Adding to DB
     queryString = `INSERT INTO PasswordReset (resetToken, email, expirationTime, usedToken)
