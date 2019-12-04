@@ -17,7 +17,12 @@ router.post('/hash', async function(req, res) {
 router.post('/submit', async function(req,res){
     let email =  req.body.email;  
     let enteredPass = req.body.password;
-    
+    if(enteredPass.length === 0 || email.length === 0){
+        return res.status(400).json({
+            error: true,
+            message: "There is an empty input"
+        });
+    }
     /*
         1. Check if email exists
         2. If so, get password
@@ -36,7 +41,8 @@ router.post('/submit', async function(req,res){
             });
         }
         else {
-            if (results.length == 0){
+            console.log("THE EMAIL" + results.length);
+            if (results.length === 0){
                 res.json({
                     error: true,
                     message: "This email does not exist in DB"
@@ -48,7 +54,7 @@ router.post('/submit', async function(req,res){
     // CHECKING PASSWORD
     queryString = `SELECT password FROM user WHERE email="${email}";`;
     await connection.query(queryString, async function(error, results, fields){
-        if (error) {
+        if (error || results.length === 0) {
             console.log(error);
             return res.status(400).json({
                 error: true,
@@ -57,7 +63,7 @@ router.post('/submit', async function(req,res){
         }
         else {
             let passwordMatch = await bcrypt.compare(enteredPass, results[0]["password"])
-
+            console.log(passwordMatch);
             if (!passwordMatch){
                 res.json({
                     error: true,
@@ -70,7 +76,7 @@ router.post('/submit', async function(req,res){
     // FINALLY GETTING INFO
     queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}";`;
     await connection.query(queryString, async function(error, results, fields){
-        if (error) {
+        if (error || results.length === 0) {
             console.log(error);
             return res.status(400).json({
                 error: true,

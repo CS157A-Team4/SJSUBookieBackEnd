@@ -18,6 +18,7 @@ router.post('/submit', async function (req, res) {
           1. Check if email is already in system
     */
     let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="${schoolid}";`;
+    //let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
     await connection.query(queryString, (error, results, fields) => {
         if (error) {
             console.log(error);
@@ -33,6 +34,7 @@ router.post('/submit', async function (req, res) {
 
             if (results.length > 0){
                 res.json({
+                    error: true,
                     message: "This email or id is already in the system"
                 })
             }
@@ -71,7 +73,7 @@ router.post('/submit', async function (req, res) {
     */
     queryString = `SELECT iduser FROM user WHERE email="${email}";`;
     await connection.query(queryString, (error, results, fields) => {
-        if (error) {
+        if (error || results.length === 0) {
             console.log(error);
             return res.status(400).json({
                 error: true,
@@ -82,8 +84,8 @@ router.post('/submit', async function (req, res) {
                 message: "Successfully created user!",
                 email: email,
                 firstname: firstname,
-                iduser: results
-                
+                iduser: results[0]["iduser"],
+                error:false
             })
         }
     });
