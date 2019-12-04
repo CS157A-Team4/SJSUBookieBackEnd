@@ -30,7 +30,7 @@ router.post('/', async function(req, res){
 
     // CODE GEN
     let code = (Math.floor(Math.random()*90000) + 10000).toString(10);
-    
+    console.log("code: " + code)
 
     // SENDING EMAIL
     var transporter = nodemailer.createTransport({
@@ -68,6 +68,9 @@ router.post('/', async function(req, res){
     // Code will expire in 7 days
     var date = new Date();
     date.setDate(date.getDate() + 7);
+    console.log("date default: " + date)
+    date.toISOString()
+    console.log("date after: " + date)
 
     // Adding to DB
     queryString = `INSERT INTO PasswordReset (resetToken, email, expirationTime, usedToken)
