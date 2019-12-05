@@ -7,16 +7,13 @@ router.get('/', function (req, res, next) {
     res.send('Signup api is working properly');
 });
 
-router.post('/submit', async function (req, res) {
+  
+/*
+    1. Check if email or schoolid is already in system
+*/
+router.post('/checkkeys', async function (req, res) {
     let email = req.body.email;
-    let password = await bcrypt.hash(req.body.password, 10);
-    let firstname = req.body.firstname;
-    let surname = req.body.surname;
     let schoolid = req.body.schoolid;
-    
-    /*
-          1. Check if email or schoolid is already in system
-    */
     
     let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="${schoolid}";`;
     //let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
@@ -41,16 +38,29 @@ router.post('/submit', async function (req, res) {
                     error: true,
                     message: "This email or id is already in the system"
                 })
-                console.log("returning..")
+                console.log("returning error...")
+                return;
+            }else{
+                res.json({
+                    error: false,
+                    message: "Both the email and id are unique."
+                })
+                console.log("returning success...")
                 return;
             }
         }
     })
+});
 
-    /*
-          2. Insert new user into system
-          < This function will run regardless of what happens previously! Wth? Do I not understand this stuff correctly? >
-    */
+/*
+    2. Insert new user into system
+*/
+router.post('/insert', async function (req, res) {
+    let email = req.body.email;
+    let password = await bcrypt.hash(req.body.password, 10);
+    let firstname = req.body.firstname;
+    let surname = req.body.surname;
+    let schoolid = req.body.schoolid;    
     
     queryString = `INSERT INTO user (schoolid, firstname, surname, email, password) 
                    VALUES ("${schoolid}", "${firstname}", "${surname}", "${email}", "${password}");`
@@ -65,14 +75,22 @@ router.post('/submit', async function (req, res) {
                 message: "Error creating new users"
             });
         }else{
-            console.log("Added user to DB!")
+            res.json({
+                error: false,
+                message: "User has been added to the DB."
+            })
+            return
         }
     });
-
+});
     
-     /*
-          3. Getting iduser and sending back response
-    */
+/*
+    3. Getting iduser and sending back response
+*/
+router.post('/getiduser', async function (req, res) {
+    let email = req.body.email;
+    let firstname = req.body.firstname;
+    
     queryString = `SELECT iduser FROM user WHERE email="${email}";`;
     await connection.query(queryString, (error, results, fields) => {
         if (error || results.length === 0) {
@@ -82,13 +100,14 @@ router.post('/submit', async function (req, res) {
                 message: "Error getting iduser"
             });
         }else {
-            return res.json({
-                message: "Successfully created user!",
+            res.json({
+                message: "Successfully retrieved iduser",
                 email: email,
                 firstname: firstname,
                 iduser: results[0]["iduser"],
                 error:false
             })
+            return
         }
     });
 });
