@@ -30,7 +30,7 @@ router.post('/enterResetCode', async function(req, res){
 
     // CHECKING FOR TOKEN
     queryString = `SELECT resetToken, usedToken FROM PasswordReset WHERE email="${email}" AND resetToken="${providedToken}" AND usedToken=0;`;
-    updateString = `UPDATE PasswordReset SET usedToken=0 WHERE email="${email}" AND resetToken="${providedToken}" AND usedToken=0;`;
+    updateString = `UPDATE PasswordReset SET usedToken=1 WHERE email="${email}" AND resetToken="${providedToken}" AND usedToken=0;`;
     await connection.query(queryString+updateString, (error, results, fields) => {
         if (error) {
             console.log(error);
