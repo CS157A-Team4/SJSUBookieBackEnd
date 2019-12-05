@@ -14,20 +14,15 @@ router.post('/submit', async function (req, res) {
     let surname = req.body.surname;
     let schoolid = req.body.schoolid;
 
-    
-    // if(await email === "" || await password === "" || await firstname ==="" || await  surname ==="" || await schoolid ===""){
-    //     return res.json({
-    //         error: true,
-    //         message: "All fields are required."
-    //     })
-    // }
 
     /*
-          1. Check if email is already in system
+          1. Check if email or schoolid is already in system
     */
+    
     let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="${schoolid}";`;
     //let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
     await connection.query(queryString, (error, results, fields) => {
+        console.log("About to SELECT....")
         if (error) {
             console.log(error);
             return res.status(400).json({
@@ -55,11 +50,12 @@ router.post('/submit', async function (req, res) {
     /*
           2. Insert new user into system
     */
-    console.log("About to insert....")
+    
     queryString = `INSERT INTO user (schoolid, firstname, surname, email, password) 
                    VALUES ("${schoolid}", "${firstname}", "${surname}", "${email}", "${password}");`
 
     await connection.query(queryString, (error, results, fields) => {
+        console.log("About to INSERT....")
         if (error) {
             console.log(error);
             return res.status(400).json({
@@ -69,15 +65,7 @@ router.post('/submit', async function (req, res) {
         }else{
             console.log("Added user to DB!")
         }
-        // else {
-        //     console.log("Success doing second query!")
-        //     res.json({
-        //         message: "Successfully created user!",
-        //         email: email,
-        //         firstname: firstname
-                
-        //     })
-        // }
+        
     });
     
      /*
