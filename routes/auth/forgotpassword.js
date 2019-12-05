@@ -52,7 +52,8 @@ router.post('/', async function(req, res){
     
     var mailOptions = {
         from: process.env.EMAIL,
-        to: 'colemckinnon.school@gmail.com',
+        //to: 'colemckinnon.school@gmail.com',
+        to: email,
         subject: 'Bookie Password Reset',
         text: `You recently requested to change the password on your SJSU Bookie account. Enter 5 digit code below to begin the reset process.\n\nCode: ${code}`
     };
@@ -90,6 +91,7 @@ router.post('/', async function(req, res){
 
     queryString = `INSERT INTO PasswordReset (resetToken, email, expirationTime, usedToken)
                 VALUES ("${code}","${email}","${date}","0");`
+    
     // Adding to DB
     await connection.query(queryString, (error, results, fields) => {
         console.log(" +++++ INSERTING +++++")

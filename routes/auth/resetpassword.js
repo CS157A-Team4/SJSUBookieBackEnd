@@ -49,12 +49,12 @@ router.post('/enterResetCode', async function(req, res){
                 // At this point, a valid token has been inputted by the user
                 return res.json({
                     error: false,
-                    message: "User has entered valid reset code. Password reset process should be initiated."
+                    message: "User has entered valid reset code. Password reset process should be initiated.",
+                    
                 })
             }
         }
     });
-
 });
 
 

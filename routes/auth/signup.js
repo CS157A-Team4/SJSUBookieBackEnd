@@ -36,11 +36,13 @@ router.post('/submit', async function (req, res) {
             console.log(results)
 
             if (results.length > 0){
-                console.log("returning..")
-                return res.json({
+                
+                res.json({
                     error: true,
                     message: "This email or id is already in the system"
                 })
+                console.log("returning..")
+                return;
             }
         }
     })
@@ -53,6 +55,7 @@ router.post('/submit', async function (req, res) {
     queryString = `INSERT INTO user (schoolid, firstname, surname, email, password) 
                    VALUES ("${schoolid}", "${firstname}", "${surname}", "${email}", "${password}");`
 
+    console.log("Outside of await INSERT after returning...")
     await connection.query(queryString, (error, results, fields) => {
         console.log("About to INSERT....")
         if (error) {
