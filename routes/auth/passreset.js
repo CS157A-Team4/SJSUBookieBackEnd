@@ -68,7 +68,7 @@ router.post('/', async function(req, res){
     // Code will expire in 7 days
     
     //var date = new Date();
-    date.setDate(date.getDate() + 7);
+    //date.setDate(date.getDate() + 7);
 
     //var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
