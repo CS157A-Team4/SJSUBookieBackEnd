@@ -45,7 +45,8 @@ router.post('/submit', async function (req, res) {
                 return;
             }
         }
-    })
+    });
+    console.log("continuing");
 
     /*
           2. Insert new user into system
