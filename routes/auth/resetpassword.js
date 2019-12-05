@@ -48,6 +48,7 @@ router.post('/enterResetCode', async function(req, res){
             }else{
                 // At this point, a valid token has been inputted by the user    
                 updateString = `UPDATE PasswordReset SET usedToken=1 WHERE email="${email}" AND resetToken="${providedToken}" AND usedToken=0;`;
+                console.log(updateString);
                 connection.query(queryString, (error, results, fields) => {
                 if (error) {
                     console.log(error);
