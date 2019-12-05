@@ -30,8 +30,7 @@ router.post('/enterResetCode', async function(req, res){
 
     // CHECKING FOR TOKEN
     queryString = `SELECT resetToken, usedToken FROM PasswordReset WHERE email="${email}" AND resetToken="${providedToken}" AND usedToken=0;`;
-    updateString = `UPDATE PasswordReset SET usedToken=1 WHERE email="${email}" AND resetToken="${providedToken}" AND usedToken=0;`;
-    await connection.query(queryString+updateString, (error, results, fields) => {
+    await connection.query(queryString, (error, results, fields) => {
         if (error) {
             console.log(error);
             return res.status(400).json({
@@ -41,18 +40,29 @@ router.post('/enterResetCode', async function(req, res){
         }
         else {
             console.log("results.length: " + results.length)
-            if (results.length === 0){
+            if (results.length > 0){
                 return res.json({
                     error: true,
                     message: "Token is invalid. Try again."
                 })
             }else{
-                // At this point, a valid token has been inputted by the user
+                // At this point, a valid token has been inputted by the user    
+                updateString = `UPDATE PasswordReset SET usedToken=1 WHERE email="${email}" AND resetToken="${providedToken}" AND usedToken=0;`;
+                connection.query(queryString, (error, results, fields) => {
+                if (error) {
+                    console.log(error);
+                    return res.status(400).json({
+                        error: true,
+                        message: "Problem getting token from DB"
+                    });
+                }
+                else{
                 return res.json({
                     error: false,
                     message: "User has entered valid reset code. Password reset process should be initiated.",
                     
-                })
+                })}
+            })
             }
         }
     });
