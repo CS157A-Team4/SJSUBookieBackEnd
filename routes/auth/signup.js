@@ -15,12 +15,12 @@ router.post('/submit', async function (req, res) {
     let schoolid = req.body.schoolid;
 
     
-    if(await email === "" || await password === "" || await firstname ==="" || await  surname ==="" || await schoolid ===""){
-        return res.json({
-            error: true,
-            message: "All fields are required."
-        })
-    }
+    // if(await email === "" || await password === "" || await firstname ==="" || await  surname ==="" || await schoolid ===""){
+    //     return res.json({
+    //         error: true,
+    //         message: "All fields are required."
+    //     })
+    // }
 
     /*
           1. Check if email is already in system
@@ -54,6 +54,7 @@ router.post('/submit', async function (req, res) {
     /*
           2. Insert new user into system
     */
+    console.log("About to insert....")
     queryString = `INSERT INTO user (schoolid, firstname, surname, email, password) 
                    VALUES ("${schoolid}", "${firstname}", "${surname}", "${email}", "${password}");`
 
