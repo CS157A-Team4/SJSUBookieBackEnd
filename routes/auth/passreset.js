@@ -68,16 +68,17 @@ router.post('/', async function(req, res){
     // Code will expire in 7 days
     
     //var date = new Date();
-    //date.setDate(date.getDate() + 7);
+    date.setDate(date.getDate() + 7);
 
     //var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     var pad = function(num) { return ('00'+num).slice(-2) };
     var date;
     date = new Date();
+    date.setDate(date.getDate() + 7);
     date = date.getUTCFullYear()     + '-' +
         pad(date.getUTCMonth() + 1)  + '-' +
-        pad(date.getUTCDate() + 30)       + ' ' +
+        pad(date.getUTCDate())       + ' ' +
         pad(date.getUTCHours())      + ':' +
         pad(date.getUTCMinutes())    + ':' +
         pad(date.getUTCSeconds());     
