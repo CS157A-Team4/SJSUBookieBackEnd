@@ -7,7 +7,7 @@ router.get('/', function (req, res, next) {
     res.send('Signup api is working properly');
 });
 
-router.post('/submit', async function (req, res) {
+router.post('/submit', async function (req, res,next) {
     let email = req.body.email;
     let password = await bcrypt.hash(req.body.password, 10);
     let firstname = req.body.firstname;
