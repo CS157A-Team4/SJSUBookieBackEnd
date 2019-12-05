@@ -18,10 +18,10 @@ router.post('/', async function(req, res){
             });
         }
         else {
-            if (results.length == 0){
+            if (results.length === 0){
                 return res.json({
                     error: true,
-                    message: "This email does not exist in DB"
+                    message: "This email does not exist in our system"
                 })
             }
         }
