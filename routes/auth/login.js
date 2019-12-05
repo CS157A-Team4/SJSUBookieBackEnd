@@ -14,8 +14,8 @@ router.post('/hash', async function(req, res) {
     res.json(password)
 })
 
-router.post('/submit', async function(req,res){
-    let email =  req.body.email;
+router.post('/checkemail', async function(req,res){
+    let email =  req.body.email;  
     let enteredPass = req.body.password;
     if(enteredPass.length === 0 || email.length === 0){
         return res.status(400).json({
@@ -47,11 +47,21 @@ router.post('/submit', async function(req,res){
                     error: true,
                     message: "This email does not exist in DB"
                 })
+            }else{
+                res.json({
+                    error: false,
+                    message: "This email is valid."
+                })
+                return
             }
         }
     });
+});
 
-    // CHECKING PASSWORD
+// CHECKING PASSWORD
+router.post('/checkpassword', async function(req,res){
+    let email =  req.body.email;  
+    let enteredPass = req.body.password;
     queryString = `SELECT password FROM user WHERE email="${email}";`;
     await connection.query(queryString, async function(error, results, fields){
         if (error || results.length === 0) {
@@ -69,11 +79,21 @@ router.post('/submit', async function(req,res){
                     error: true,
                     message: "I don't think that password matches"
                 })
+                return
+            }else{
+                res.json({
+                    error: false,
+                    message: "This password is valid."
+                })
+                return
             }
         }
     });
+});
 
-    // FINALLY GETTING INFO
+// FINALLY GETTING INFO
+router.post('/getinfo', async function(req,res){
+    let email =  req.body.email;  
     queryString = `SELECT schoolid, iduser, firstname, surname, email FROM user WHERE email="${email}";`;
     await connection.query(queryString, async function(error, results, fields){
         if (error || results.length === 0) {
@@ -90,9 +110,9 @@ router.post('/submit', async function(req,res){
             data: results,
             message: "Logged in!"
         })
+        return
     });
 });
-
 
 
 module.exports = router;

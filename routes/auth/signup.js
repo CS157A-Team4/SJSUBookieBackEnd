@@ -7,18 +7,18 @@ router.get('/', function (req, res, next) {
     res.send('Signup api is working properly');
 });
 
-router.post('/submit', async function (req, res) {
+  
+/*
+    1. Check if email or schoolid is already in system
+*/
+router.post('/checkkeys', async function (req, res) {
     let email = req.body.email;
-    let password = await bcrypt.hash(req.body.password, 10);
-    let firstname = req.body.firstname;
-    let surname = req.body.surname;
     let schoolid = req.body.schoolid;
-
-    /*
-          1. Check if email is already in system
-    */
-    let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
-    await connection.query(queryString, (error, results, fields) => {
+    
+    let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="${schoolid}";`;
+    //let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
+    let data =  await connection.query(queryString, (error, results, fields) => {
+        console.log("About to SELECT....")
         if (error) {
             console.log(error);
             return res.status(400).json({
@@ -29,47 +29,68 @@ router.post('/submit', async function (req, res) {
         else {
             
             console.log("Success getting emails")
-            console.log(results)
+            console.log(results.length)
+            console.log(results[0])
 
             if (results.length > 0){
+                
                 res.json({
                     error: true,
                     message: "This email or id is already in the system"
                 })
+                console.log("returning error...")
+                return;
+            }else{
+                res.json({
+                    error: false,
+                    message: "Both the email and id are unique."
+                })
+                console.log("returning success...")
+                return;
             }
         }
-    });
+    })
+});
 
-    /*
-          2. Insert new user into system
-    */
+/*
+    2. Insert new user into system
+*/
+router.post('/insert', async function (req, res) {
+    let email = req.body.email;
+    let password = await bcrypt.hash(req.body.password, 10);
+    let firstname = req.body.firstname;
+    let surname = req.body.surname;
+    let schoolid = req.body.schoolid;    
+    
     queryString = `INSERT INTO user (schoolid, firstname, surname, email, password) 
                    VALUES ("${schoolid}", "${firstname}", "${surname}", "${email}", "${password}");`
 
+    console.log("Outside of await INSERT after returning...")
     await connection.query(queryString, (error, results, fields) => {
+        console.log("About to INSERT....")
         if (error) {
-            console.log(error);
+            console.log("dammit");
             return res.status(400).json({
                 error: true,
                 message: "Error creating new users"
             });
         }else{
-            console.log("Added user to DB!")
+            res.json({
+                error: false,
+                message: "User has been added to the DB."
+            })
+            return
         }
-        // else {
-        //     console.log("Success doing second query!")
-        //     res.json({
-        //         message: "Successfully created user!",
-        //         email: email,
-        //         firstname: firstname
-                
-        //     })
-        // }
     });
+});
     
-     /*
-          3. Getting iduser and sending back response
-    */
+/*
+    3. Getting iduser and sending back response
+*/
+router.post('/getiduser', async function (req, res) {
+    let email = req.body.email;
+    let firstname = req.body.firstname;
+    
     queryString = `SELECT iduser FROM user WHERE email="${email}";`;
     await connection.query(queryString, (error, results, fields) => {
         if (error || results.length === 0) {
@@ -80,16 +101,15 @@ router.post('/submit', async function (req, res) {
             });
         }else {
             res.json({
-                message: "Successfully created user!",
+                message: "Successfully retrieved iduser",
                 email: email,
                 firstname: firstname,
                 iduser: results[0]["iduser"],
                 error:false
             })
+            return
         }
     });
-
-
 });
 
 

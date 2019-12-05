@@ -12,7 +12,8 @@ var friends = require('./routes/profile/friends');
 var messages = require('./routes/profile/messages');
 var posts = require('./routes/postrelated/posts');
 var login = require('./routes/auth/login');
-var passreset = require('./routes/auth/passreset');
+var forgotpassword = require('./routes/auth/forgotpassword');
+var resetpassword = require('./routes/auth/resetpassword');
 var signup = require('./routes/auth/signup');
 var messages = require('./routes/profile/messages');
 var reservations = require('./routes/postrelated/reservation')
@@ -48,7 +49,8 @@ app.use('/profile', profile);
 app.use('/friends', friends);
 app.use('/login', login);
 app.use('/signup', signup);
-app.use('/passreset', passreset);
+app.use('/forgotpassword', forgotpassword);
+app.use('/resetpassword', resetpassword)
 app.use('/reservations', reservations);
 app.use('/messages', messages);
 
