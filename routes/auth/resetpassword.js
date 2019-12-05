@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var connection = require('../database');
+const bcrypt = require('bcryptjs')
 
 // Password Reset - Unfinished
 router.post('/enterResetCode', async function(req, res){
