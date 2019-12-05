@@ -66,14 +66,24 @@ router.post('/', async function(req, res){
     */
 
     // Code will expire in 7 days
-    var date = new Date();
-    date.setDate(date.getDate() + 7);
+    
+    //var date = new Date();
+    //date.setDate(date.getDate() + 7);
 
-    let formattedDate = date.toISOString()
+    //var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
+    var pad = function(num) { return ('00'+num).slice(-2) };
+    var date;
+    date = new Date();
+    date = date.getUTCFullYear()     + '-' +
+        pad(date.getUTCMonth() + 1)  + '-' +
+        pad(date.getUTCDate())       + ' ' +
+        pad(date.getUTCHours())      + ':' +
+        pad(date.getUTCMinutes())    + ':' +
+        pad(date.getUTCSeconds());     
     // Adding to DB
     queryString = `INSERT INTO PasswordReset (resetToken, email, expirationTime, usedToken)
-                   VALUES ("${code}","${email}","${formattedDate}","0");`
+                   VALUES ("${code}","${email}","${date}","0");`
 
     await connection.query(queryString, (error, results, fields) => {
     if (error) {
