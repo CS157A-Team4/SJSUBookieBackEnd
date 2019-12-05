@@ -45,7 +45,7 @@ router.post('/submit', async function (req, res) {
             }
             console.log("you should not be seeing this!")
         }
-    });
+    }).then(() => {
 
     /*
           2. Insert new user into system
@@ -67,6 +67,8 @@ router.post('/submit', async function (req, res) {
         }
         
     });
+})
+
     
      /*
           3. Getting iduser and sending back response
