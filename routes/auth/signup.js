@@ -6,10 +6,11 @@ const bcrypt = require('bcryptjs')
 router.get('/', function (req, res, next) {
     res.send('Signup api is working properly');
 });
-
+const SALT_ROUNDS = 10;
 router.post('/submit', async function (req, res) {
+    console.log(req.body);
     let email = req.body.email;
-    let password = await bcrypt.hash(req.body.password, 10);
+    let password = await bcrypt.hash(req.body.password, SALT_ROUNDS);
     let firstname = req.body.firstname;
     let surname = req.body.surname;
     let schoolid = req.body.schoolid;
