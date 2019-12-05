@@ -58,7 +58,7 @@ router.post('/submit', async function (req, res,next) {
     await connection.query(queryString, (error, results, fields) => {
         console.log("About to INSERT....")
         if (error) {
-            console.log(error);
+            console.log("dammit");
             return res.status(400).json({
                 error: true,
                 message: "Error creating new users"
