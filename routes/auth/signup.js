@@ -20,7 +20,7 @@ router.post('/submit', async function (req, res,next) {
     
     let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="${schoolid}";`;
     //let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
-    await connection.query(queryString, (error, results, fields) => {
+    let data =  await connection.query(queryString, (error, results, fields) => {
         console.log("About to SELECT....")
         if (error) {
             console.log(error);
@@ -28,7 +28,6 @@ router.post('/submit', async function (req, res,next) {
                 error: true,
                 message: "Error checking emails"
             });
-            res.end();
         }
         else {
             
@@ -42,10 +41,10 @@ router.post('/submit', async function (req, res,next) {
                     error: true,
                     message: "This email or id is already in the system"
                 })
-                next();
             }
         }
-    })
+    });
+    console.log(data);
 
     /*
           2. Insert new user into system
