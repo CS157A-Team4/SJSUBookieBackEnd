@@ -13,8 +13,7 @@ router.post('/submit', async function (req, res) {
     let firstname = req.body.firstname;
     let surname = req.body.surname;
     let schoolid = req.body.schoolid;
-    console.log("-- called -- ")
-
+    
     /*
           1. Check if email or schoolid is already in system
     */
@@ -43,12 +42,12 @@ router.post('/submit', async function (req, res) {
                     message: "This email or id is already in the system"
                 })
             }
-            console.log("you should not be seeing this!")
         }
-    }).then(() => {
+    })
 
     /*
           2. Insert new user into system
+          < This function will run regardless of what happens previously! Wth? Do I not understand this stuff correctly? >
     */
     
     queryString = `INSERT INTO user (schoolid, firstname, surname, email, password) 
@@ -65,9 +64,7 @@ router.post('/submit', async function (req, res) {
         }else{
             console.log("Added user to DB!")
         }
-        
     });
-})
 
     
      /*
