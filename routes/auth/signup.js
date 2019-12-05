@@ -21,7 +21,7 @@ router.post('/submit', async function (req, res) {
     
     let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="${schoolid}";`;
     //let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
-    await connection.query(queryString, (error, results, fields) => {
+    let data = await connection.query(queryString, (error, results, fields) => {
         console.log("About to SELECT....")
         if (error) {
             console.log(error);
@@ -46,7 +46,7 @@ router.post('/submit', async function (req, res) {
             }
         }
     });
-    console.log("continuing");
+    console.log(data);
 
     /*
           2. Insert new user into system
