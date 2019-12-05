@@ -40,7 +40,7 @@ router.post('/enterResetCode', async function(req, res){
         }
         else {
             console.log("results.length: " + results.length)
-            if (results.length > 0){
+            if (!(results.length > 0)){
                 return res.json({
                     error: true,
                     message: "Token is invalid. Try again."
