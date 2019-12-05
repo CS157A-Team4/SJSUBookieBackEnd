@@ -35,7 +35,8 @@ router.post('/', async function(req, res){
 
         ------------------*/
 
-        
+        // CODE GEN
+        let code = (Math.floor(Math.random()*90000) + 10000).toString(10);
 
     /* ----------  SENDING EMAIL --------- */
         var transporter = nodemailer.createTransport({
@@ -69,8 +70,6 @@ router.post('/', async function(req, res){
         4. Say whether token has been used
         */
 
-        // CODE GEN
-        let code = (Math.floor(Math.random()*90000) + 10000).toString(10);
 
         // Code will expire in 7 days
         var pad = function(num) { return ('00'+num).slice(-2) };
