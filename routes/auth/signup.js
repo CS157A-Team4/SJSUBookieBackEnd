@@ -38,7 +38,7 @@ router.post('/submit', async function (req, res) {
 
             if (results.length > 0){
                 console.log("returning..")
-                res.status(400).json({
+                res.status(400).end({
                     error: true,
                     message: "This email or id is already in the system"
                 })
