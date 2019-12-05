@@ -6,11 +6,10 @@ const bcrypt = require('bcryptjs')
 router.get('/', function (req, res, next) {
     res.send('Signup api is working properly');
 });
-const SALT_ROUNDS = 10;
+
 router.post('/submit', async function (req, res) {
-    console.log(req.body);
     let email = req.body.email;
-    let password = await bcrypt.hash(req.body.password, SALT_ROUNDS);
+    let password = await bcrypt.hash(req.body.password, 10);
     let firstname = req.body.firstname;
     let surname = req.body.surname;
     let schoolid = req.body.schoolid;
@@ -21,12 +20,30 @@ router.post('/submit', async function (req, res) {
     
     let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="${schoolid}";`;
     //let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
-    let data = await connection.query(queryString);
-    console.log(data.length);
+    await connection.query(queryString, (error, results, fields) => {
+        console.log("About to SELECT....")
+        if (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: true,
+                message: "Error checking emails"
+            });
+        }
+        else {
+            
+            console.log("Success getting emails")
+            console.log(results.length)
+            console.log(results)
 
-    if(data){
-        return res.json({error:true,message:"Oh"})
-    }
+            if (results.length > 0){
+                console.log("returning..")
+                return res.json({
+                    error: true,
+                    message: "This email or id is already in the system"
+                })
+            }
+        }
+    })
 
     /*
           2. Insert new user into system
