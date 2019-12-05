@@ -13,7 +13,7 @@ router.post('/submit', async function (req, res) {
     let firstname = req.body.firstname;
     let surname = req.body.surname;
     let schoolid = req.body.schoolid;
-
+    console.log("-- called -- ")
 
     /*
           1. Check if email or schoolid is already in system
