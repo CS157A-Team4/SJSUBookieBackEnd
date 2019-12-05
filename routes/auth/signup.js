@@ -17,7 +17,7 @@ router.post('/checkkeys', async function (req, res) {
     
     let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="${schoolid}";`;
     //let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
-    await connection.query(queryString, (error, results, fields) => {
+    let data =  await connection.query(queryString, (error, results, fields) => {
         console.log("About to SELECT....")
         if (error) {
             console.log(error);
@@ -30,7 +30,7 @@ router.post('/checkkeys', async function (req, res) {
             
             console.log("Success getting emails")
             console.log(results.length)
-            console.log(results)
+            console.log(results[0])
 
             if (results.length > 0){
                 
@@ -69,7 +69,7 @@ router.post('/insert', async function (req, res) {
     await connection.query(queryString, (error, results, fields) => {
         console.log("About to INSERT....")
         if (error) {
-            console.log(error);
+            console.log("dammit");
             return res.status(400).json({
                 error: true,
                 message: "Error creating new users"
