@@ -19,9 +19,9 @@ router.post('/', async function(req, res){
             });
         }
         else {
-            console.log("RESULTS: " + results)
-            console.log(results.length)
-            if (results.length === 0){
+            console.log("RESULTS: " + results[0])
+            console.log(results[0].length)
+            if (results[0].length === 0){
                 return res.json({
                     error: true,
                     message: "This email does not exist in our system"
