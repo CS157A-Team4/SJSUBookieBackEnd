@@ -38,6 +38,7 @@ router.post('/submit', async function (req, res) {
         else {
             
             console.log("Success getting emails")
+            console.log(results.length)
             console.log(results)
 
             if (results.length > 0){
@@ -46,6 +47,7 @@ router.post('/submit', async function (req, res) {
                     message: "This email or id is already in the system"
                 })
             }
+            console.log("you should not be seeing this!")
         }
     });
 
