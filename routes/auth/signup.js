@@ -28,19 +28,21 @@ router.post('/submit', async function (req, res) {
                 error: true,
                 message: "Error checking emails"
             });
+            res.end();
         }
         else {
             
             console.log("Success getting emails")
             console.log(results.length)
-            console.log(results)
+            console.log(results[0])
 
             if (results.length > 0){
                 console.log("returning..")
-                return res.json({
+                return res.status(400).json({
                     error: true,
                     message: "This email or id is already in the system"
                 })
+                res.end();
             }
         }
     })
