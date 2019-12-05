@@ -101,3 +101,4 @@ router.post('/reset', async function(req, res){
     });
 });
 
+module.exports = router;
