@@ -22,7 +22,7 @@ router.post('/submit', async function (req, res) {
     let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="${schoolid}";`;
     //let queryString = `SELECT email FROM user WHERE email="${email}" OR schoolid="I${schoolid}";`;
     let data = await connection.query(queryString);
-    console.log(data);
+    console.log(data.length);
 
     if(data){
         return res.json({error:true,message:"Oh"})
