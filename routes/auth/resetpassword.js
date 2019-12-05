@@ -19,7 +19,7 @@ router.post('/enterResetCode', async function(req, res){
         }
         else {
             if (results.length == 0){
-                res.json({
+                return res.json({
                     error: true,
                     message: "This email does not exist in DB"
                 })
@@ -40,18 +40,18 @@ router.post('/enterResetCode', async function(req, res){
         else {
             console.log("results.length: " + results.length)
             if (results.length === 0){
-                res.json({
+                return res.json({
                     error: true,
                     message: "Token is invalid. Try again."
                 })
+            }else{
+                // At this point, a valid token has been inputted by the user
+                return res.json({
+                    error: false,
+                    message: "User has entered valid reset code. Password reset process should be initiated."
+                })
             }
         }
-
-        // At this point, a valid token has been inputted by the user
-        res.json({
-            error: false,
-            message: "User has entered valid reset code. Password reset process should be initiated."
-        })
     });
 
 });

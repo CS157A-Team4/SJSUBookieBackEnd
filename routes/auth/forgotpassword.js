@@ -19,7 +19,7 @@ router.post('/', async function(req, res){
         }
         else {
             if (results.length == 0){
-                res.json({
+                return res.json({
                     error: true,
                     message: "This email does not exist in DB"
                 })
@@ -95,13 +95,13 @@ router.post('/', async function(req, res){
                 message: "Error adding to PasswordReset"
             });
         }
-    });
 
-    // The email exists, so email a code to reset password
-    res.json({
-        error: false,
-        message: "Reset Data has been added to the DB"
-    })
+         // The email exists, so email a code to reset password
+        return res.json({
+            error: false,
+            message: "Reset Data has been added to the DB"
+        })
+    });
 })
 
 module.exports = router;
