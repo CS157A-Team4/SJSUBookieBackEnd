@@ -42,6 +42,7 @@ router.post('/submit', async function (req, res) {
                     error: true,
                     message: "This email or id is already in the system"
                 });
+                return;
             }
         }
     })
