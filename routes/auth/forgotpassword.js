@@ -90,7 +90,7 @@ router.post('/', async function(req, res){
                             VALUES ("${code}","${email}","${date}","0");`
                 
                 // Adding to DB
-                await connection.query(queryString, (error, results, fields) => {
+                connection.query(queryString, (error, results, fields) => {
                     console.log(" +++++ INSERTING +++++")
                     if (error) {
                         console.log(error);
