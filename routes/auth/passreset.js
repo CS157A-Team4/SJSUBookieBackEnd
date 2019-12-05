@@ -3,7 +3,6 @@ var router = express.Router();
 var connection = require('../database');
 var nodemailer = require('nodemailer');
 
-
 // Password Reset - Unfinished
 router.post('/', async function(req, res){
     let email = req.body.email
@@ -32,77 +31,69 @@ router.post('/', async function(req, res){
     let code = (Math.floor(Math.random()*90000) + 10000).toString(10);
     console.log("code: " + code)
 
-    // SENDING EMAIL
+/* ----------  SENDING EMAIL --------- */
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
           user: process.env.EMAIL,
           pass: process.env.EMAIL_PASS
         }
-      });
+    });
       
-      var mailOptions = {
+    var mailOptions = {
         from: process.env.EMAIL,
         to: 'colemckinnon.school@gmail.com',
         subject: 'Bookie Password Reset',
         text: `You recently requested to change the password on your SJSU Bookie account. Enter 5 digit code below to begin the reset process.\n\nCode: ${code}`
-      };
+    };
       
-      transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);
         } else {
           console.log('Email sent: ' + info.response);
         }
-      });
-
+    });
+// ----------------------------------------
 
     /*
       1. Write code to DB
       2. Write email to DB
       3. Give Expiration date/time
       4. Say whether token has been used
-            Token is used when 
     */
 
     // Code will expire in 7 days
-    
-    //var date = new Date();
-    //date.setDate(date.getDate() + 7);
-
-    //var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
-
     var pad = function(num) { return ('00'+num).slice(-2) };
-    var date;
-    date = new Date();
+    var date = new Date();
     date.setDate(date.getDate() + 7);
+    
+    // Format date for SQL
     date = date.getUTCFullYear()     + '-' +
         pad(date.getUTCMonth() + 1)  + '-' +
         pad(date.getUTCDate())       + ' ' +
         pad(date.getUTCHours())      + ':' +
         pad(date.getUTCMinutes())    + ':' +
         pad(date.getUTCSeconds());     
+    
     // Adding to DB
     queryString = `INSERT INTO PasswordReset (resetToken, email, expirationTime, usedToken)
                    VALUES ("${code}","${email}","${date}","0");`
 
     await connection.query(queryString, (error, results, fields) => {
-    if (error) {
-        console.log(error);
-        return res.status(400).json({
-            error: true,
-            message: "Error adding to PasswordReset"
-        });
-    }else{
-        console.log("Added PasswordReset to DB!")
-    }
-    
-});
+        if (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: true,
+                message: "Error adding to PasswordReset"
+            });
+        }
+    });
 
     // The email exists, so email a code to reset password
     res.json({
         error: false,
-        message: "Temporary message. This email address is valid."
+        message: "Reset Data has been added to the DB"
     })
 })
 
