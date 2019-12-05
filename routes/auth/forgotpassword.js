@@ -3,7 +3,7 @@ var router = express.Router();
 var connection = require('../database');
 var nodemailer = require('nodemailer');
 
-// Password Reset - Unfinished
+// Forgot password
 router.post('/', async function(req, res){
     let email = req.body.email
 
@@ -26,6 +26,13 @@ router.post('/', async function(req, res){
             }
         }
     });
+
+     /* ----- TODO ------
+
+       If a reset code assiciated with the email already exists,
+        set the token to USED
+
+      ------------------*/
 
     // CODE GEN
     let code = (Math.floor(Math.random()*90000) + 10000).toString(10);
@@ -56,7 +63,7 @@ router.post('/', async function(req, res){
     });
 // ----------------------------------------
 
-    /*
+    /*    STEPS
       1. Write code to DB
       2. Write email to DB
       3. Give Expiration date/time
