@@ -87,9 +87,7 @@ router.post('/', async function(req, res){
         pad(date.getUTCMinutes())    + ':' +
         pad(date.getUTCSeconds());     
 
-    
 
-    
     queryString = `INSERT INTO PasswordReset (resetToken, email, expirationTime, usedToken)
                 VALUES ("${code}","${email}","${date}","0");`
     // Adding to DB

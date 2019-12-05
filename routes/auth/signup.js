@@ -14,6 +14,13 @@ router.post('/submit', async function (req, res) {
     let surname = req.body.surname;
     let schoolid = req.body.schoolid;
 
+    if(email === "" || password === "" || firstname ==="" || surname ==="" || schoolid ===""){
+        return res.json({
+            error: true,
+            message: "All fields are required."
+        })
+    }
+
     /*
           1. Check if email is already in system
     */
