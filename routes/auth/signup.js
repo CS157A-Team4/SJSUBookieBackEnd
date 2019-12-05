@@ -41,7 +41,7 @@ router.post('/submit', async function (req, res) {
             console.log(results)
 
             if (results.length > 0){
-                res.json({
+                return res.json({
                     error: true,
                     message: "This email or id is already in the system"
                 })
@@ -88,7 +88,7 @@ router.post('/submit', async function (req, res) {
                 message: "Error getting iduser"
             });
         }else {
-            res.json({
+            return res.json({
                 message: "Successfully created user!",
                 email: email,
                 firstname: firstname,
