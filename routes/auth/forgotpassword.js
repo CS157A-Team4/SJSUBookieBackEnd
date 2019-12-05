@@ -19,6 +19,8 @@ router.post('/', async function(req, res){
             });
         }
         else {
+            console.log("RESULTS: " + results)
+            console.log(results.length)
             if (results.length === 0){
                 return res.json({
                     error: true,
