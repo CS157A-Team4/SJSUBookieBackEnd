@@ -38,6 +38,7 @@ router.post('/enterResetCode', async function(req, res){
             });
         }
         else {
+            console.log(results)
             if (results.length == 0){
                 res.json({
                     error: true,
@@ -46,6 +47,8 @@ router.post('/enterResetCode', async function(req, res){
             }
         }
     });
+
+    
 
     // At this point, a valid token has been inputted by the user
     res.json({
