@@ -25,64 +25,65 @@ router.post('/', async function(req, res){
                 })
             }
         }
-    });
-
-     /* ----- TODO ------
-
-       If a reset code assiciated with the email already exists,
-        set the token to USED
-
-      ------------------*/
-
-    // CODE GEN
-    let code = (Math.floor(Math.random()*90000) + 10000).toString(10);
-    console.log("code: " + code)
-
-/* ----------  SENDING EMAIL --------- */
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.EMAIL_PASS
-        }
-    });
-      
-    var mailOptions = {
-        from: process.env.EMAIL,
-        to: 'colemckinnon.school@gmail.com',
-        subject: 'Bookie Password Reset',
-        text: `You recently requested to change the password on your SJSU Bookie account. Enter 5 digit code below to begin the reset process.\n\nCode: ${code}`
-    };
-      
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-    });
-// ----------------------------------------
-
-    /*    STEPS
-      1. Write code to DB
-      2. Write email to DB
-      3. Give Expiration date/time
-      4. Say whether token has been used
-    */
-
-    // Code will expire in 7 days
-    var pad = function(num) { return ('00'+num).slice(-2) };
-    var date = new Date();
-    date.setDate(date.getDate() + 7);
     
-    // Format date for SQL
-    date = date.getUTCFullYear()     + '-' +
-        pad(date.getUTCMonth() + 1)  + '-' +
-        pad(date.getUTCDate())       + ' ' +
-        pad(date.getUTCHours())      + ':' +
-        pad(date.getUTCMinutes())    + ':' +
-        pad(date.getUTCSeconds());     
+
+        /* ----- TODO ------
+
+        If a reset code assiciated with the email already exists,
+            set the token to USED
+
+        ------------------*/
+
+        // CODE GEN
+        let code = (Math.floor(Math.random()*90000) + 10000).toString(10);
+        console.log("code: " + code)
+
+    /* ----------  SENDING EMAIL --------- */
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+            user: process.env.EMAIL,
+            pass: process.env.EMAIL_PASS
+            }
+        });
+        
+        var mailOptions = {
+            from: process.env.EMAIL,
+            to: 'colemckinnon.school@gmail.com',
+            subject: 'Bookie Password Reset',
+            text: `You recently requested to change the password on your SJSU Bookie account. Enter 5 digit code below to begin the reset process.\n\nCode: ${code}`
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+            console.log(error);
+            } else {
+            console.log('Email sent: ' + info.response);
+            }
+        });
+    // ----------------------------------------
+
+        /*    STEPS
+        1. Write code to DB
+        2. Write email to DB
+        3. Give Expiration date/time
+        4. Say whether token has been used
+        */
+
+        // Code will expire in 7 days
+        var pad = function(num) { return ('00'+num).slice(-2) };
+        var date = new Date();
+        date.setDate(date.getDate() + 7);
+        
+        // Format date for SQL
+        date = date.getUTCFullYear()     + '-' +
+            pad(date.getUTCMonth() + 1)  + '-' +
+            pad(date.getUTCDate())       + ' ' +
+            pad(date.getUTCHours())      + ':' +
+            pad(date.getUTCMinutes())    + ':' +
+            pad(date.getUTCSeconds());     
     
+    });
     // Adding to DB
     queryString = `INSERT INTO PasswordReset (resetToken, email, expirationTime, usedToken)
                    VALUES ("${code}","${email}","${date}","0");`
