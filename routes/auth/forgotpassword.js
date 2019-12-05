@@ -10,6 +10,7 @@ router.post('/', async function(req, res){
     // CHECKING EMAIL
     let queryString = `SELECT email FROM user WHERE email="${email}";`;
     await connection.query(queryString, (error, results, fields) => {
+        console.log(" +++++ SELECTING +++++")
         if (error) {
             console.log(error);
             return res.status(400).json({
@@ -89,6 +90,7 @@ router.post('/', async function(req, res){
                    VALUES ("${code}","${email}","${date}","0");`
 
     await connection.query(queryString, (error, results, fields) => {
+        console.log(" +++++ INSERTING +++++")
         if (error) {
             console.log(error);
             return res.status(400).json({
