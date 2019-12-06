@@ -20,7 +20,7 @@ router.post('/send', function(req, res) {
                 console.log(error);
                 return res.status(400).json({
                     error: true,
-                    message: "Error sending the messsage"
+                    message: "Error sending the message"
                 });
             }
             else{
