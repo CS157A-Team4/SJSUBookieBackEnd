@@ -61,7 +61,10 @@ app.use(bodyParser.json({
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
+if(process.env.STATUS !== "production"){
+  var server = app.listen(8080, function() {
+    console.log('Ready on port %d', server.address().port);
+  });}
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
